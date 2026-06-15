@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.6.4 - 2026/06/15
+refactor(architect): reduce per-phase LOC target from 1500 to 1000 — smaller phases reduce cognitive burden and review complexity
+feat(review): add phase dependency and size checklists to adversarial plan review — enforces 1000 LOC limit per phase, flags missing estimates as Blockers
+
 0.6.3 - 2026/06/15
 feat(architect): version plan files — each revision produces a new file (YYYY-MM-DD-<prefix>-<slug>-v<N>.md) instead of overwriting; first version is v0
 

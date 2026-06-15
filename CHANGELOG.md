@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.6.3 - 2026/06/15
+feat(architect): version plan files — each revision produces a new file (YYYY-MM-DD-<prefix>-<slug>-v<N>.md) instead of overwriting; first version is v0
+
 0.6.2 - 2026/05/01
 fix(skills/boot.md): add `.ignore` to gitignore loop — was missing `.ignore` entry that maestro-boot.sh already handles
 

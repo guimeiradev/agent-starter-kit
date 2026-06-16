@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.6.5 - 2026/06/16
+fix(configure-cli): add .memory/**/* to edit and external_directory for build, architect, reviewer, and contextualizer — syncs .memory permissions with main framework; sub-agents can now write to .memory without prompting
+
 0.6.4 - 2026/06/15
 refactor(architect): reduce per-phase LOC target from 1500 to 1000 — smaller phases reduce cognitive burden and review complexity
 feat(review): add phase dependency and size checklists to adversarial plan review — enforces 1000 LOC limit per phase, flags missing estimates as Blockers

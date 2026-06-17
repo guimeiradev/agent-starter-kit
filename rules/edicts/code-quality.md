@@ -1,7 +1,7 @@
 ---
 shortDescription: Universal code quality conventions for all languages.
 scope: coding
-version: 0.3.3
+version: 0.3.4
 lastUpdated: 2026-06-17
 ---
 
@@ -34,6 +34,8 @@ Function names SHOULD NOT embed infrastructure or tool names (e.g., `resolveOpen
 ### Method Ordering
 
 Functions SHOULD be ordered top-down: if function A calls function B, then function B SHOULD be defined above function A. The reader should be able to read the file from top to bottom, understanding each function before encountering its callers. Helpers and low-level utilities come first; orchestrators and high-level entry points come last.
+
+Exception: constructors and factory functions (e.g., `NewFoo`, `CreateBar`) SHOULD be placed immediately after the struct/class/type declaration they construct, not at the bottom of the file. The type and its constructor form a single conceptual unit.
 
 ### Error Handling
 

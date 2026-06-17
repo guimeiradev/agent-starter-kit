@@ -3,7 +3,8 @@
 ```log
 0.7.1 - 2026/06/17
 fix(configure-cli): add .memory/* alongside .memory/**/* in edit and external_directory for all personas — glob ** may not match direct children of .memory/; files like settings.conf and MEMORY.md were falling through to wildcard ask/deny
-feat(rules): add method granularity rule — trivial wrapper functions are indirection without value; functions must do meaningful work
+feat(rules): add method granularity rule — trivial wrapper functions (~5 LOC or fewer) are indirection without value; functions must do meaningful work
+feat(rules): add method ordering rule — callees must be defined above callers for top-down readability
 feat(rules): clarify data trust boundary — no separate parse functions when value object constructor already validates
 fix(configure-cli): add rg (ripgrep) to bash allow list for all personas — file search is a read operation, same category as grep
 

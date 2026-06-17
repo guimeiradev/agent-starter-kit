@@ -1,7 +1,7 @@
 ---
 shortDescription: Universal code quality conventions for all languages.
 scope: coding
-version: 0.3.2
+version: 0.3.3
 lastUpdated: 2026-06-17
 ---
 
@@ -30,6 +30,10 @@ Variable names MUST convey intention or purpose, not describe content. Single-le
 ### Function Naming
 
 Function names SHOULD NOT embed infrastructure or tool names (e.g., `resolveOpencodeConfigPath`). Use generic terms that describe the role (`resolveSupportedCliConfigPath`). The function should survive a tool swap without needing a rename.
+
+### Method Ordering
+
+Functions SHOULD be ordered top-down: if function A calls function B, then function B SHOULD be defined above function A. The reader should be able to read the file from top to bottom, understanding each function before encountering its callers. Helpers and low-level utilities come first; orchestrators and high-level entry points come last.
 
 ### Error Handling
 

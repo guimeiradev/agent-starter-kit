@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.5.6
-# @updated      2026-06-16
+# @version      0.6.0
+# @updated      2026-06-17
 set -euo pipefail
 
 checkRequiredDependencies() {
@@ -290,12 +290,23 @@ applyPermissionProfile() {
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "stat *": "allow",
       "diff *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git *": "allow",
-      "mkdir *": "allow"
+      "mkdir *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
       ".memory/**/*": "allow",
@@ -320,6 +331,13 @@ applyPermissionProfile() {
   "permission": {
     "bash": {
       "*": "deny",
+      "sed -i *": "deny",
+      "cp *": "deny",
+      "mv *": "deny",
+      "touch *": "deny",
+      "tee *": "deny",
+      "xargs *": "deny",
+      "ln *": "deny",
       "rm *": "deny",
       "mkfs *": "deny",
       "dd *": "deny",
@@ -352,6 +370,12 @@ applyPermissionProfile() {
       "head *": "allow",
       "tail *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
+      "wc *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git status *": "allow",
@@ -422,6 +446,11 @@ applyPermissionProfile() {
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "stat *": "allow",
       "tree *": "allow",
       "read *": "allow",
@@ -435,7 +464,13 @@ applyPermissionProfile() {
       "git ls-files *": "allow",
       "git blame *": "allow",
       "git merge-base *": "allow",
-      "git describe *": "allow"
+      "git describe *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
       "*": "allow"
@@ -457,6 +492,13 @@ applyPermissionProfile() {
   "permission": {
     "bash": {
       "*": "ask",
+      "sed -i *": "deny",
+      "cp *": "deny",
+      "mv *": "deny",
+      "touch *": "deny",
+      "tee *": "deny",
+      "xargs *": "deny",
+      "ln *": "deny",
       "rm *": "deny",
       "mkfs *": "deny",
       "dd *": "deny",
@@ -489,6 +531,12 @@ applyPermissionProfile() {
       "head *": "allow",
       "tail *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
+      "wc *": "allow",
       "tree *": "allow",
       "read *": "allow",
       "git status *": "allow",
@@ -559,10 +607,21 @@ applyPermissionProfile() {
       "tail *": "allow",
       "wc *": "allow",
       "sort *": "allow",
+      "sed *": "allow",
+      "awk *": "allow",
+      "tr *": "allow",
+      "cut *": "allow",
+      "uniq *": "allow",
       "tree *": "allow",
       "stat *": "allow",
       "file *": "allow",
-      "mkdir *": "allow"
+      "mkdir *": "allow",
+      "touch *": "allow",
+      "cp *": "allow",
+      "mv *": "allow",
+      "tee *": "allow",
+      "xargs *": "allow",
+      "ln *": "allow"
     },
     "edit": {
       ".memory/**/*": "allow",

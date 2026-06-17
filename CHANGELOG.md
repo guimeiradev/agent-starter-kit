@@ -1,6 +1,11 @@
 # Changelog
 
 ```log
+0.7.0 - 2026/06/17
+feat(configure-cli): add text processing and file manipulation utils to persona bash allow lists — sed, awk, tr, cut, uniq, wc on all profiles; touch, cp, mv, tee, xargs, ln on write-enabled personas
+fix(configure-cli): add deny guards for read-only personas — sed -i and file manipulation tools explicitly denied on architect and reviewer to prevent bypassing edit permissions
+fix(tests): update stale test assertions for permission defaults and model version checks
+
 0.6.5 - 2026/06/16
 fix(configure-cli): add .memory/**/* to edit and external_directory for build, architect, reviewer, and contextualizer — syncs .memory permissions with main framework; sub-agents can now write to .memory without prompting
 

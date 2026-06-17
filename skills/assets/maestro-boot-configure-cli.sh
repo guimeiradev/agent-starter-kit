@@ -11,7 +11,7 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.0
+# @version      0.6.2
 # @updated      2026-06-17
 set -euo pipefail
 
@@ -285,6 +285,7 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
@@ -309,6 +310,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -320,6 +322,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
@@ -366,6 +369,7 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
@@ -392,6 +396,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -401,6 +406,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
@@ -441,6 +447,7 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
@@ -481,6 +488,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
@@ -527,6 +535,7 @@ applyPermissionProfile() {
       "ls *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "cat *": "allow",
       "head *": "allow",
       "tail *": "allow",
@@ -553,6 +562,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -562,6 +572,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }
@@ -600,6 +611,7 @@ applyPermissionProfile() {
       "test *": "allow",
       "find *": "allow",
       "grep *": "allow",
+      "rg *": "allow",
       "ls *": "allow",
       "cat *": "allow",
       "read *": "allow",
@@ -624,6 +636,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -635,6 +648,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**/*": "allow",
       "/tmp/*": "allow"
     }

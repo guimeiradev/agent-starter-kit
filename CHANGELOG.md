@@ -4,6 +4,7 @@
 0.7.2 - 2026/06/18
 fix(coder): make style absorption deterministic — run `ls` on target directory, read exactly two sibling files most similar in function, match structure/patterns/conventions exactly
 feat(rules): add native tooling rule — coders should use Edit/Read/Write/Grep/Glob directly, not write scripts for file operations
+feat(review): add style proximity verification — reviewer reads sibling files and compares against changed code before checking rules, project style takes precedence
 
 0.7.1 - 2026/06/17
 fix(configure-cli): add .memory/* alongside .memory/**/* in edit and external_directory for all personas — glob ** may not match direct children of .memory/; files like settings.conf and MEMORY.md were falling through to wildcard ask/deny

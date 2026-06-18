@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.7.2 - 2026/06/18
+fix(coder): make style absorption deterministic — run `ls` on target directory, read exactly two sibling files most similar in function, match structure/patterns/conventions exactly
+feat(rules): add native tooling rule — coders should use Edit/Read/Write/Grep/Glob directly, not write scripts for file operations
+
 0.7.1 - 2026/06/17
 fix(configure-cli): add .memory/* alongside .memory/**/* in edit and external_directory for all personas — glob ** may not match direct children of .memory/; files like settings.conf and MEMORY.md were falling through to wildcard ask/deny
 feat(rules): add method granularity rule — trivial wrapper functions (~5 LOC or fewer) are indirection without value; functions must do meaningful work

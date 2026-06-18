@@ -1,8 +1,8 @@
 ---
 shortDescription: Reviews code and plans against the project's coding rules.
 usedBy: [reviewer]
-version: 0.0.2
-lastUpdated: 2026-04-07
+version: 0.0.3
+lastUpdated: 2026-06-18
 ---
 
 ## Purpose
@@ -16,7 +16,9 @@ A code review without a checklist drifts toward gut feeling — catching whateve
    - **Edicts** — violations require justification visible in the code (a comment, a design note, or a `.context.md` entry). If the justification is clear, it is a warning. If absent or unclear, it is a blocker.
    - **Counsel** — deviations are warnings. The code can ship, but the author should justify.
 
-2. **Walk the work against every rule.** Check each statement in each loaded rule file against the changed code or plan. Do not skip rules, do not paraphrase — the rules are the source of truth. Look for:
+2. **Verify style proximity.** For each changed file, run `ls` on its directory. Read one or two sibling files — pick those most similar in function to the changed code. Compare the changed code against the siblings. Flag any structural or pattern mismatch as a Warning. The Coder's self-review is not evidence — verify independently.
+
+3. **Walk the work against every rule.** Check each statement in each loaded rule file against the changed code or plan. Do not skip rules, do not paraphrase — the rules are the source of truth. Look for:
    - Naming violations — variables, methods, parameters that fail conventions.
    - Readability violations — clever patterns, dense one-liners, code that needs comments to be understood.
    - Testing violations — missing tests for complex logic, hardcoded secrets in tests.

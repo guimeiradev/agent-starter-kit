@@ -1,6 +1,12 @@
 # Changelog
 
 ```log
+0.7.3 - 2026/06/18
+refactor(architect): reduce per-phase LOC target from 1000 to 600 with 800 hard cap — aligns with Standard review tier threshold, reduces need for Full tier reviews
+feat(review): update adversarial review phase size threshold from 1000 to 800 LOC — enforces new per-phase hard cap
+feat(review): add LOC threshold to DRAFT self-review — F criterion now checks phase LOC against 600 soft cap and 800 hard cap
+fix(review): use `git diff HEAD` instead of `git diff` for LOC measurement — captures both staged and unstaged changes, prevents staged work from bypassing review
+
 0.7.2 - 2026/06/18
 fix(coder): make style absorption deterministic — run `ls` on target directory, read exactly two sibling files most similar in function, match structure/patterns/conventions exactly
 feat(rules): add native tooling rule — coders should use Edit/Read/Write/Grep/Glob directly, not write scripts for file operations

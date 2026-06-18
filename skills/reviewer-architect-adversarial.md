@@ -1,8 +1,8 @@
 ---
 shortDescription: Adversarial plan review — structural validation and assumption attack before implementation begins.
 usedBy: [reviewer]
-version: 0.4.0
-lastUpdated: 2026-06-15
+version: 0.4.1
+lastUpdated: 2026-06-18
 ---
 
 ## Purpose
@@ -51,8 +51,8 @@ A plan that survives adversarial scrutiny before implementation saves hours of r
    - List every artifact this phase produces (a new file, a new table, a new endpoint). Does a later phase reference that artifact? If yes, is the dependency declared in the later phase's prerequisites? If not, that is a Warning (undocumented dependency).
 
 9. **Phase size checklist.** For each phase, check the estimated LOC (lines of code: insertions + deletions).
-   - **LOC threshold.** Does the phase estimate exceed 1000 LOC? If yes, that is a Blocker — the phase must be split into smaller phases. The Architect persona targets ~1000 LOC per phase maximum (follows: `personas/architect.md` step 6).
-   - **Missing estimate.** Does the phase have an estimated LOC? If not, that is a Blocker — every phase must include an LOC estimate.
+    - **LOC threshold.** Does the phase estimate exceed 800 LOC? If yes, that is a Blocker — the phase must be split into smaller phases. The Architect persona targets ~600 LOC per phase with an 800 LOC hard cap (follows: `personas/architect.md` step 5).
+    - **Missing estimate.** Does the phase have an estimated LOC? If not, that is a Blocker — every phase must include an LOC estimate.
 
 10. **Assemble findings.** Collect all findings from steps 2–9. Each finding already has a severity (Blocker or Warning) assigned by the checklist that produced it. Findings that do not fit any checklist item but seem worth mentioning are Notes. Format each finding as:
 

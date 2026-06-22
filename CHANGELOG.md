@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.7.4 - 2026/06/22
+feat(configure-cli): add robotic humor — same temperature/topP as introvert (0.2/0.85) but thinking explicitly disabled; agentBindingBuilder handles "disabled" string for thinkingBudget
+refactor(coder): tier-2 to tier-1, pragmatic to robotic — fast model with no thinking for explicit linear playbooks
+
 0.7.3 - 2026/06/18
 refactor(architect): reduce per-phase LOC target from 1000 to 600 with 800 hard cap — aligns with Standard review tier threshold, reduces need for Full tier reviews
 feat(review): update adversarial review phase size threshold from 1000 to 800 LOC — enforces new per-phase hard cap

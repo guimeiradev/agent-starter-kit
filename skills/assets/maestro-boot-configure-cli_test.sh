@@ -188,7 +188,7 @@ EOF
 }
 
 runThinkingBudgetVerificationCases() {
-  local testDir introvertBudget pragmaticBudget sympatheticBudget extrovertBudget defaultBudget
+  local testDir introvertBudget pragmaticBudget sympatheticBudget extrovertBudget roboticType defaultBudget
   testDir=$(mktemp -d -p "$fixtureDir")
   mkdir -p "$testDir/.agents/personas"
   cat > "$testDir/.agents/personas/introvert.md" <<'EOF'
@@ -222,6 +222,14 @@ modelTier: tier-2
 humor: extrovert
 ---
 Outgoing persona.
+EOF
+  cat > "$testDir/.agents/personas/robotic.md" <<'EOF'
+---
+preferredModel: qwen
+modelTier: tier-2
+humor: robotic
+---
+Mechanical persona.
 EOF
   cat > "$testDir/.agents/personas/default.md" <<'EOF'
 ---
@@ -282,6 +290,18 @@ EOF
     return
   fi
   echo "PASS extrovert thinking budget is 16384"
+  passCount=$((passCount + 1))
+
+  roboticType=$(jq -r '.agent.robotic.thinking.type // "missing"' "$testDir/opencode.json")
+  if [[ "$roboticType" != "disabled" ]]; then
+    cat <<EOF
+FAIL robotic thinking type is disabled
+  expected disabled, got: $roboticType
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS robotic thinking type is disabled"
   passCount=$((passCount + 1))
 
   defaultBudget=$(jq -r '.agent.default.thinking.budgetTokens // "absent"' "$testDir/opencode.json")

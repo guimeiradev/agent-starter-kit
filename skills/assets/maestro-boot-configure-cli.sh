@@ -215,6 +215,13 @@ resolveHumorAttributes() {
         thinkingBudget) echo "16384" ;;
       esac
       ;;
+    robotic)
+      case "$attribute" in
+        temperature)    echo "0.2" ;;
+        topP)           echo "0.85" ;;
+        thinkingBudget) echo "0" ;;
+      esac
+      ;;
     *)
       echo ""
       ;;
@@ -689,6 +696,14 @@ agentBindingBuilder() {
   local topP="$5"
   local thinkingBudget="$6"
   local agentBindings="$7"
+  local thinkingJson="null"
+
+  if [ -n "$thinkingBudget" ]; then
+    thinkingJson="{\"type\": \"enabled\", \"budgetTokens\": $thinkingBudget}"
+    if [ "$thinkingBudget" = "0" ]; then
+      thinkingJson='{"type": "disabled"}'
+    fi
+  fi
 
   jq \
     --arg name "$agentName" \
@@ -696,14 +711,14 @@ agentBindingBuilder() {
     --arg description "$description" \
     --arg temperature "$temperature" \
     --arg topP "$topP" \
-    --arg thinkingBudget "$thinkingBudget" \
+    --argjson thinking "$thinkingJson" \
     '.[$name] = (
       {
         "model": $model,
         "description": $description,
         "temperature": (if $temperature == "" then null else ($temperature | tonumber) end),
         "brainstorm": (if $topP == "" then null else {"top_p": ($topP | tonumber)} end),
-        "thinking": (if $thinkingBudget == "" then null else {"type": "enabled", "budgetTokens": ($thinkingBudget | tonumber)} end)
+        "thinking": $thinking
       } | to_entries | map(select(.value != null)) | from_entries
     )' <<< "$agentBindings"
 }

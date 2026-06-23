@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+0.7.9 - 2026/06/23
+refactor(configure-cli): improve agentBindingBuilder() readability — eliminated nested if/else, consolidated jq calls into linear flow with separate conditionals for temperature, top_p, and thinking; each step builds on previous result for clear data flow
+
+0.7.8 - 2026/06/23
+feat(configure-cli): dual-format thinking config — agent bindings emit both Anthropic (`thinking: {type, budgetTokens}`) and OpenAI (`reasoning: {effort}`) formats; disable works universally across SDKs
+fix(configure-cli): replace enable_thinking with proper thinking/reasoning formats — `enable_thinking` was wrong parameter for both Anthropic and OpenAI SDK providers
+
 0.7.7 - 2026/06/23
 feat(personas): add Observations convention — dispatch notes instruct all personas to optionally include a `## Observations` section in their handoff for honest opinions, concerns, or patterns outside their deliverable; Maestro scans and saves to long-term memory, feeds relevant observations into subsequent dispatch context
 feat(memory): add Observations section to long-term memory schema — dedicated section for persona specialist feedback that falls outside deliverables but may matter later

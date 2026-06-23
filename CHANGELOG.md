@@ -3,6 +3,7 @@
 ```log
 0.7.9 - 2026/06/23
 refactor(configure-cli): improve agentBindingBuilder() readability — eliminated nested if/else, consolidated jq calls into linear flow with separate conditionals for temperature, top_p, and thinking; each step builds on previous result for clear data flow
+feat(configure-cli): emit reasoningEffort alongside reasoning.effort — flat `reasoningEffort` field added for opencode pass-through compatibility per docs (https://opencode.ai/docs/agents/#additional); both nested and flat formats emitted for max provider compatibility
 
 0.7.8 - 2026/06/23
 feat(configure-cli): dual-format thinking config — agent bindings emit both Anthropic (`thinking: {type, budgetTokens}`) and OpenAI (`reasoning: {effort}`) formats; disable works universally across SDKs

@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.2
-# @updated      2026-06-17
+# @version      0.6.4
+# @updated      2026-06-22
 set -euo pipefail
 
 checkRequiredDependencies() {
@@ -317,8 +317,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -329,8 +328,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -403,8 +401,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -413,8 +410,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -495,8 +491,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -569,8 +564,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -579,8 +573,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -643,8 +636,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
       "*": "ask"
@@ -655,8 +647,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
-      ".memory/*": "allow",
-      ".memory/**/*": "allow",
+      ".memory/**": "allow",
       "/tmp/*": "allow"
     }
   }
@@ -679,7 +670,7 @@ writeAgentsToConfigFile() {
   tmpFile=$(mktemp)
 
   jq --argjson bindings "$agentBindings" \
-    '.agent = (.agent // {} | . * $bindings)' "$configPath" > "$tmpFile"
+    '.agent = (.agent // {} | . + $bindings)' "$configPath" > "$tmpFile"
   mv "$tmpFile" "$configPath"
 }
 

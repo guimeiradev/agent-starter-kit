@@ -1,6 +1,13 @@
 # Changelog
 
 ```log
+0.7.6 - 2026/06/23
+fix(memory): pre-create all .memory subdirectories in agent-memory skill — plan/, todo/, reviews/ added alongside session/; prevents failures when architect, task-tracking, or code-quality-review skills write before dirs exist
+
+0.7.5 - 2026/06/22
+fix(configure-cli): simplify .memory permissions to single glob pattern — `.memory/*` and `.memory/**/*` replaced with `.memory/**` for consistent matching; prevents permission prompts for build agent editing .memory/ files
+fix(configure-cli): replace jq deep merge with shallow merge — `*` operator preserved stale budgetTokens when thinking disabled; `+` replaces agent objects entirely so disabled thinking has no budget field
+
 0.7.4 - 2026/06/22
 feat(configure-cli): add robotic humor — same temperature/topP as introvert (0.2/0.85) but thinking explicitly disabled; agentBindingBuilder handles "disabled" string for thinkingBudget
 refactor(coder): tier-2 to tier-1, pragmatic to robotic — fast model with no thinking for explicit linear playbooks

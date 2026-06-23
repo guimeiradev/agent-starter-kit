@@ -2,9 +2,9 @@
 shortDescription: Reads project structure and produces .context.md files and docs/FEATURE-MAP.md.
 preferredModel: host
 modelTier: tier-1
-version: 0.2.5
-lastUpdated: 2026-04-25
-humor: introvert
+version: 0.3.0
+lastUpdated: 2026-06-23
+humor: robotic
 ---
 
 # Contextualizer

@@ -11,8 +11,33 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.4
-# @updated      2026-06-22
+# @version      0.6.7
+# @updated      2026-06-23
+#
+# ── Thinking/Reasoning Configuration ─────────────────────────────────────────
+#
+# Agent bindings emit BOTH Anthropic and OpenAI thinking formats so either SDK
+# respects the setting. The provider SDK determines which format is used:
+#
+#   Anthropic SDK (@ai-sdk/anthropic):
+#     - Uses "thinking" field: {type: "disabled"} or {type: "enabled", budgetTokens: N}
+#     - Config-level thinking is IGNORED by `opencode run` (only --thinking flag works)
+#     - `--thinking` CLI flag forces thinking ON, overriding config
+#
+#   OpenAI-compatible SDK (@ai-sdk/openai-compatible):
+#     - Uses "reasoning" field: {effort: "none"|"low"|"medium"|"high"}
+#     - Config-level thinking IS respected by `opencode run`
+#     - Config disable OVERRIDES --thinking CLI flag
+#
+# Humor → Thinking Budget → Effort Mapping:
+#   robotic     → budget=0     → thinking.type=disabled, reasoning.effort=none
+#   introvert   → budget=10240 → thinking.type=enabled,  reasoning.effort=low
+#   pragmatic   → budget=12288 → thinking.type=enabled,  reasoning.effort=medium
+#   sympathetic → budget=14336 → thinking.type=enabled,  reasoning.effort=high
+#   extrovert   → budget=16384 → thinking.type=enabled,  reasoning.effort=xhigh
+#
+# ──────────────────────────────────────────────────────────────────────────────
+
 set -euo pipefail
 
 checkRequiredDependencies() {
@@ -189,37 +214,42 @@ resolveHumorAttributes() {
   case "$humor" in
     introvert)
       case "$attribute" in
-        temperature)    echo "0.2" ;;
-        topP)           echo "0.85" ;;
-        thinkingBudget) echo "10240" ;;
+        temperature)      echo "0.2" ;;
+        topP)             echo "0.85" ;;
+        thinkingBudget)   echo "10240" ;;
+        reasoningEffort)  echo "low" ;;
       esac
       ;;
     pragmatic)
       case "$attribute" in
-        temperature)    echo "0.25" ;;
-        topP)           echo "0.85" ;;
-        thinkingBudget) echo "12288" ;;
+        temperature)      echo "0.25" ;;
+        topP)             echo "0.85" ;;
+        thinkingBudget)   echo "12288" ;;
+        reasoningEffort)  echo "medium" ;;
       esac
       ;;
     sympathetic)
       case "$attribute" in
-        temperature)    echo "0.3" ;;
-        topP)           echo "0.85" ;;
-        thinkingBudget) echo "14336" ;;
+        temperature)      echo "0.3" ;;
+        topP)             echo "0.85" ;;
+        thinkingBudget)   echo "14336" ;;
+        reasoningEffort)  echo "high" ;;
       esac
       ;;
     extrovert)
       case "$attribute" in
-        temperature)    echo "0.35" ;;
-        topP)           echo "0.85" ;;
-        thinkingBudget) echo "16384" ;;
+        temperature)      echo "0.35" ;;
+        topP)             echo "0.85" ;;
+        thinkingBudget)   echo "16384" ;;
+        reasoningEffort)  echo "xhigh" ;;
       esac
       ;;
     robotic)
       case "$attribute" in
-        temperature)    echo "0.2" ;;
-        topP)           echo "0.85" ;;
-        thinkingBudget) echo "0" ;;
+        temperature)      echo "0.2" ;;
+        topP)             echo "0.85" ;;
+        thinkingBudget)   echo "0" ;;
+        reasoningEffort)  echo "none" ;;
       esac
       ;;
     *)
@@ -317,6 +347,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -328,6 +359,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "/tmp/*": "allow"
     }
@@ -401,6 +433,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -410,6 +443,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "/tmp/*": "allow"
     }
@@ -491,6 +525,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "/tmp/*": "allow"
     }
@@ -564,6 +599,7 @@ applyPermissionProfile() {
       "stat *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -573,6 +609,7 @@ applyPermissionProfile() {
       "*": "allow"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "/tmp/*": "allow"
     }
@@ -636,6 +673,7 @@ applyPermissionProfile() {
       "ln *": "allow"
     },
     "edit": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "*.md": "allow",
       "/tmp/*": "allow",
@@ -647,6 +685,7 @@ applyPermissionProfile() {
       "*.env.*": "deny"
     },
     "external_directory": {
+      ".memory/*": "allow",
       ".memory/**": "allow",
       "/tmp/*": "allow"
     }
@@ -687,31 +726,39 @@ agentBindingBuilder() {
   local topP="$5"
   local thinkingBudget="$6"
   local agentBindings="$7"
-  local thinkingJson="null"
+  local reasoningEffort="$8"
 
-  if [ -n "$thinkingBudget" ]; then
-    thinkingJson="{\"type\": \"enabled\", \"budgetTokens\": $thinkingBudget}"
-    if [ "$thinkingBudget" = "0" ]; then
-      thinkingJson='{"type": "disabled"}'
-    fi
+  local thinkingJson=""
+  if [ "$thinkingBudget" = "0" ]; then
+    thinkingJson='{"thinking":{"type":"disabled"},"reasoning":{"effort":"none"}}'
+  fi
+  if [ -n "$thinkingBudget" ] && [ "$thinkingBudget" != "0" ]; then
+    thinkingJson=$(jq -n \
+      --argjson budget "$thinkingBudget" \
+      --arg effort "$reasoningEffort" \
+      '{"thinking":{"type":"enabled","budgetTokens":$budget},"reasoning":{"effort":$effort}}')
   fi
 
-  jq \
-    --arg name "$agentName" \
+  local agentJson
+  agentJson=$(jq -n \
     --arg model "$modelId" \
     --arg description "$description" \
-    --arg temperature "$temperature" \
-    --arg topP "$topP" \
-    --argjson thinking "$thinkingJson" \
-    '.[$name] = (
-      {
-        "model": $model,
-        "description": $description,
-        "temperature": (if $temperature == "" then null else ($temperature | tonumber) end),
-        "brainstorm": (if $topP == "" then null else {"top_p": ($topP | tonumber)} end),
-        "thinking": $thinking
-      } | to_entries | map(select(.value != null)) | from_entries
-    )' <<< "$agentBindings"
+    '{model: $model, description: $description}')
+
+  if [ -n "$temperature" ]; then
+    agentJson=$(echo "$agentJson" | jq --argjson temp "$temperature" '. + {temperature: $temp}')
+  fi
+
+  if [ -n "$topP" ]; then
+    agentJson=$(echo "$agentJson" | jq --argjson topP "$topP" '. + {top_p: $topP}')
+  fi
+
+  if [ -n "$thinkingJson" ]; then
+    agentJson=$(echo "$agentJson" | jq --argjson thinking "$thinkingJson" '. + $thinking')
+  fi
+
+  jq -n --arg name "$agentName" --argjson agent "$agentJson" --argjson bindings "$agentBindings" \
+    '$bindings | .[$name] = $agent'
 }
 
 personaAgentJsonBuilder() {
@@ -738,8 +785,9 @@ personaAgentJsonBuilder() {
     temperature=$(resolveHumorAttributes "$humor" "temperature")
     topP=$(resolveHumorAttributes "$humor" "topP")
     thinkingBudget=$(resolveHumorAttributes "$humor" "thinkingBudget")
+    reasoningEffort=$(resolveHumorAttributes "$humor" "reasoningEffort")
 
-    agentBindings=$(agentBindingBuilder "$agentName" "$modelId" "$shortDescription" "$temperature" "$topP" "$thinkingBudget" "$agentBindings")
+    agentBindings=$(agentBindingBuilder "$agentName" "$modelId" "$shortDescription" "$temperature" "$topP" "$thinkingBudget" "$agentBindings" "$reasoningEffort")
 
     agentBindings=$(applyPermissionProfile "$agentName" "$agentBindings")
   done

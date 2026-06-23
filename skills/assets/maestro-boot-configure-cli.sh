@@ -11,7 +11,7 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.7
+# @version      0.6.8
 # @updated      2026-06-23
 #
 # ── Thinking/Reasoning Configuration ─────────────────────────────────────────
@@ -26,15 +26,16 @@
 #
 #   OpenAI-compatible SDK (@ai-sdk/openai-compatible):
 #     - Uses "reasoning" field: {effort: "none"|"low"|"medium"|"high"}
+#     - Also emits "reasoningEffort" (flat) for opencode pass-through compatibility
 #     - Config-level thinking IS respected by `opencode run`
 #     - Config disable OVERRIDES --thinking CLI flag
 #
 # Humor → Thinking Budget → Effort Mapping:
-#   robotic     → budget=0     → thinking.type=disabled, reasoning.effort=none
-#   introvert   → budget=10240 → thinking.type=enabled,  reasoning.effort=low
-#   pragmatic   → budget=12288 → thinking.type=enabled,  reasoning.effort=medium
-#   sympathetic → budget=14336 → thinking.type=enabled,  reasoning.effort=high
-#   extrovert   → budget=16384 → thinking.type=enabled,  reasoning.effort=xhigh
+#   robotic     → budget=0     → thinking.type=disabled, reasoning.effort=none, reasoningEffort=none
+#   introvert   → budget=10240 → thinking.type=enabled,  reasoning.effort=low,  reasoningEffort=low
+#   pragmatic   → budget=12288 → thinking.type=enabled,  reasoning.effort=medium, reasoningEffort=medium
+#   sympathetic → budget=14336 → thinking.type=enabled,  reasoning.effort=high, reasoningEffort=high
+#   extrovert   → budget=16384 → thinking.type=enabled,  reasoning.effort=xhigh, reasoningEffort=xhigh
 #
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -730,13 +731,13 @@ agentBindingBuilder() {
 
   local thinkingJson=""
   if [ "$thinkingBudget" = "0" ]; then
-    thinkingJson='{"thinking":{"type":"disabled"},"reasoning":{"effort":"none"}}'
+    thinkingJson='{"thinking":{"type":"disabled"},"reasoning":{"effort":"none"},"reasoningEffort":"none"}'
   fi
   if [ -n "$thinkingBudget" ] && [ "$thinkingBudget" != "0" ]; then
     thinkingJson=$(jq -n \
       --argjson budget "$thinkingBudget" \
       --arg effort "$reasoningEffort" \
-      '{"thinking":{"type":"enabled","budgetTokens":$budget},"reasoning":{"effort":$effort}}')
+      '{"thinking":{"type":"enabled","budgetTokens":$budget},"reasoning":{"effort":$effort},"reasoningEffort":$effort}')
   fi
 
   local agentJson

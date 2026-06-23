@@ -1,7 +1,7 @@
 ---
 shortDescription: Long-term and session memory across sessions.
 usedBy: [maestro]
-version: 0.2.2
+version: 0.3.0
 lastUpdated: 2026-06-23
 ---
 
@@ -58,6 +58,10 @@ Agents start cold every session — lessons learned, user preferences, and inter
 ## Discovered Issues
 
 - <one issue per line — pre-existing bugs, tech debt, or code smells found during work but outside the current task's scope>
+
+## Observations
+
+- <one observation per line — opinions, concerns, patterns, or suggestions from persona handoffs that fall outside the deliverable but may matter later>
 
 ## Project Notes
 

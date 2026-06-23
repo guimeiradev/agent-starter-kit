@@ -1,6 +1,11 @@
 # Changelog
 
 ```log
+0.7.7 - 2026/06/23
+feat(personas): add Observations convention — dispatch notes instruct all personas to optionally include a `## Observations` section in their handoff for honest opinions, concerns, or patterns outside their deliverable; Maestro scans and saves to long-term memory, feeds relevant observations into subsequent dispatch context
+feat(memory): add Observations section to long-term memory schema — dedicated section for persona specialist feedback that falls outside deliverables but may matter later
+refactor(contextualizer): humor changed from introvert to robotic — thinking disabled, same temperature/topP as introvert (0.2/0.85)
+
 0.7.6 - 2026/06/23
 fix(memory): pre-create all .memory subdirectories in agent-memory skill — plan/, todo/, reviews/ added alongside session/; prevents failures when architect, task-tracking, or code-quality-review skills write before dirs exist
 

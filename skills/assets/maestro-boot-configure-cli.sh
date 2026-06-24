@@ -11,8 +11,8 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.8
-# @updated      2026-06-23
+# @version      0.6.11
+# @updated      2026-06-24
 #
 # ── Thinking/Reasoning Configuration ─────────────────────────────────────────
 #
@@ -20,19 +20,18 @@
 # respects the setting. The provider SDK determines which format is used:
 #
 #   Anthropic SDK (@ai-sdk/anthropic):
-#     - Uses "thinking" field: {type: "disabled"} or {type: "enabled", budgetTokens: N}
+#     - Uses "thinking" field: {type: "enabled", budgetTokens: N}
 #     - Config-level thinking is IGNORED by `opencode run` (only --thinking flag works)
 #     - `--thinking` CLI flag forces thinking ON, overriding config
 #
 #   OpenAI-compatible SDK (@ai-sdk/openai-compatible):
-#     - Uses "reasoning" field: {effort: "none"|"low"|"medium"|"high"}
+#     - Uses "reasoning" field: {effort: "low"|"medium"|"high"|"xhigh"}
 #     - Also emits "reasoningEffort" (flat) for opencode pass-through compatibility
 #     - Config-level thinking IS respected by `opencode run`
-#     - Config disable OVERRIDES --thinking CLI flag
 #
 # Humor → Thinking Budget → Effort Mapping:
-#   robotic     → budget=0     → thinking.type=disabled, reasoning.effort=none, reasoningEffort=none
-#   introvert   → budget=10240 → thinking.type=enabled,  reasoning.effort=low,  reasoningEffort=low
+#   robotic     → budget=4096  → thinking.type=enabled,  reasoning.effort=low,  reasoningEffort=low
+#   introvert   → budget=8192  → thinking.type=enabled,  reasoning.effort=low,  reasoningEffort=low
 #   pragmatic   → budget=12288 → thinking.type=enabled,  reasoning.effort=medium, reasoningEffort=medium
 #   sympathetic → budget=14336 → thinking.type=enabled,  reasoning.effort=high, reasoningEffort=high
 #   extrovert   → budget=16384 → thinking.type=enabled,  reasoning.effort=xhigh, reasoningEffort=xhigh
@@ -213,18 +212,26 @@ resolveHumorAttributes() {
   local humor="$1"
   local attribute="$2"
   case "$humor" in
+    robotic)
+      case "$attribute" in
+        temperature)      echo "0.2" ;;
+        topP)             echo "0.7" ;;
+        thinkingBudget)   echo "4096" ;;
+        reasoningEffort)  echo "low" ;;
+      esac
+      ;;
     introvert)
       case "$attribute" in
         temperature)      echo "0.2" ;;
-        topP)             echo "0.85" ;;
-        thinkingBudget)   echo "10240" ;;
+        topP)             echo "0.75" ;;
+        thinkingBudget)   echo "8192" ;;
         reasoningEffort)  echo "low" ;;
       esac
       ;;
     pragmatic)
       case "$attribute" in
         temperature)      echo "0.25" ;;
-        topP)             echo "0.85" ;;
+        topP)             echo "0.8" ;;
         thinkingBudget)   echo "12288" ;;
         reasoningEffort)  echo "medium" ;;
       esac
@@ -243,14 +250,6 @@ resolveHumorAttributes() {
         topP)             echo "0.85" ;;
         thinkingBudget)   echo "16384" ;;
         reasoningEffort)  echo "xhigh" ;;
-      esac
-      ;;
-    robotic)
-      case "$attribute" in
-        temperature)      echo "0.2" ;;
-        topP)             echo "0.85" ;;
-        thinkingBudget)   echo "0" ;;
-        reasoningEffort)  echo "none" ;;
       esac
       ;;
     *)
@@ -730,10 +729,7 @@ agentBindingBuilder() {
   local reasoningEffort="$8"
 
   local thinkingJson=""
-  if [ "$thinkingBudget" = "0" ]; then
-    thinkingJson='{"thinking":{"type":"disabled"},"reasoning":{"effort":"none"},"reasoningEffort":"none"}'
-  fi
-  if [ -n "$thinkingBudget" ] && [ "$thinkingBudget" != "0" ]; then
+  if [ -n "$thinkingBudget" ]; then
     thinkingJson=$(jq -n \
       --argjson budget "$thinkingBudget" \
       --arg effort "$reasoningEffort" \

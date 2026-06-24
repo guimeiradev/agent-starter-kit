@@ -4,8 +4,8 @@
 # @usage        maestro-boot-configure-cli_test.sh
 # @output       PASS/FAIL per test case, summary at end.
 # @requires     bash v4+, yq v4+, jq v1.6+
-# @version      0.1.2
-# @updated      2026-06-23
+# @version      0.1.4
+# @updated      2026-06-24
 set -euo pipefail
 
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -247,15 +247,15 @@ EOF
   introvertBudget=$(jq -r '.agent.introvert.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
   introvertEffort=$(jq -r '.agent.introvert.reasoning.effort // "missing"' "$testDir/opencode.json")
   introvertReasoningEffort=$(jq -r '.agent.introvert.reasoningEffort // "missing"' "$testDir/opencode.json")
-  if [[ "$introvertBudget" != "10240" || "$introvertEffort" != "low" || "$introvertReasoningEffort" != "low" ]]; then
+  if [[ "$introvertBudget" != "8192" || "$introvertEffort" != "low" || "$introvertReasoningEffort" != "low" ]]; then
     cat <<EOF
-FAIL introvert thinking budget=10240 effort=low reasoningEffort=low
-  expected budget=10240 effort=low reasoningEffort=low, got: budget=$introvertBudget effort=$introvertEffort reasoningEffort=$introvertReasoningEffort
+FAIL introvert thinking budget=8192 effort=low reasoningEffort=low
+  expected budget=8192 effort=low reasoningEffort=low, got: budget=$introvertBudget effort=$introvertEffort reasoningEffort=$introvertReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS introvert thinking budget=10240 effort=low reasoningEffort=low"
+  echo "PASS introvert thinking budget=8192 effort=low reasoningEffort=low"
   passCount=$((passCount + 1))
 
   pragmaticBudget=$(jq -r '.agent.pragmatic.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
@@ -301,17 +301,18 @@ EOF
   passCount=$((passCount + 1))
 
   roboticType=$(jq -r '.agent.robotic.thinking.type // "missing"' "$testDir/opencode.json")
+  roboticBudget=$(jq '.agent.robotic.thinking.budgetTokens // "missing"' "$testDir/opencode.json")
   roboticEffort=$(jq -r '.agent.robotic.reasoning.effort // "missing"' "$testDir/opencode.json")
   roboticReasoningEffort=$(jq -r '.agent.robotic.reasoningEffort // "missing"' "$testDir/opencode.json")
-  if [[ "$roboticType" != "disabled" || "$roboticEffort" != "none" || "$roboticReasoningEffort" != "none" ]]; then
+  if [[ "$roboticType" != "enabled" || "$roboticBudget" != "4096" || "$roboticEffort" != "low" || "$roboticReasoningEffort" != "low" ]]; then
     cat <<EOF
-FAIL robotic thinking type=disabled effort=none reasoningEffort=none
-  expected type=disabled effort=none reasoningEffort=none, got: type=$roboticType effort=$roboticEffort reasoningEffort=$roboticReasoningEffort
+ FAIL robotic thinking type=enabled budgetTokens=4096 effort=low reasoningEffort=low
+   expected type=enabled budgetTokens=4096 effort=low reasoningEffort=low, got: type=$roboticType budget=$roboticBudget effort=$roboticEffort reasoningEffort=$roboticReasoningEffort
 EOF
     failCount=$((failCount + 1))
     return
   fi
-  echo "PASS robotic thinking type=disabled effort=none reasoningEffort=none"
+  echo "PASS robotic thinking type=enabled budgetTokens=4096 effort=low reasoningEffort=low"
   passCount=$((passCount + 1))
 
   defaultBudget=$(jq -r '.agent.default.thinking.budgetTokens // "absent"' "$testDir/opencode.json")

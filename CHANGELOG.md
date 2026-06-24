@@ -5,6 +5,8 @@
 fix(configure-cli): robotic humor thinking budget 0→4096 — thinking re-enabled with minimal budget instead of disabled; reasoning effort mapped to low instead of none
 fix(configure-cli): introvert thinking budget 10240→8192 — aligned with industry effort-level estimates for hard tasks
 feat(configure-cli): vary top_p by humor — robotic 0.7, introvert 0.75, pragmatic 0.8, sympathetic 0.85, extrovert 0.85; deterministic roles get lower top_p for code precision, exploratory roles keep higher for design flexibility
+feat(configure-cli): block destructive git commands on all personas — git clean, git reset, git rebase, git push --force, git push -f explicitly denied in bash permission profiles for all personas; prevents accidental history rewrites, untracked file deletion, and force pushes
+refactor(personas): bump coder modelTier from tier-1 to tier-2 — fast model with no thinking insufficient for coding tasks that require reasoning about context, dependencies, and test design
 
 0.8.4 - 2026/06/24
 fix(self-review): adapt SHIELD dimensions for all pass types — S-dimension simplified, H-dimension generalized, E/L/D dimensions made pass-agnostic (grounding, evidence, external factors) instead of pass-specific; all dimensions now work for both full and focused reviews

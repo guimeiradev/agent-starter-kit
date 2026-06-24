@@ -1,8 +1,8 @@
 ---
 shortDescription: Software development. Backend, frontend, APIs, components, data layers.
 preferredModel: host
-modelTier: tier-1
-version: 0.2.2
+modelTier: tier-2
+version: 0.2.3
 lastUpdated: 2026-06-24
 humor: robotic
 ---

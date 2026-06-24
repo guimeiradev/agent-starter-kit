@@ -1,17 +1,17 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Reviewer — scored every run using the SHIELD framework.
 usedBy: [reviewer]
-version: 0.1.0
-lastUpdated: 2026-04-24
+version: 0.1.1
+lastUpdated: 2026-06-24
 ---
 
 ## Purpose
 
-Before delivering a review, the Reviewer evaluates its own output against the SHIELD rubric. Each letter is scored 0, 1, or 2. The total determines whether to deliver, fix gaps, or restart. This replaces subjective self-assessment with a deterministic checklist that guards against the persona's primary failure mode: findings softening or disappearing between review passes. The review-loop uses `<review-focus>` blocks for shapeshifting across coherence, security, and quality concerns — the rubric ensures each focus is executed faithfully and findings hold firm across passes.
+Before delivering a review, the Reviewer evaluates its own output against the SHIELD rubric. Each letter is scored 0, 1, or 2. The total determines whether to deliver, fix gaps, or restart. This replaces subjective self-assessment with a deterministic checklist that guards against the persona's primary failure mode: findings softening or disappearing between review passes. The reviewer determines its own focus from the `<task>` — default is all three lenses (coherence, quality, security); the rubric ensures each focus is executed faithfully and findings hold firm across passes.
 
 ## Procedure
 
-1. **Score each criterion.** After completing all review passes specified in the `<review-focus>` blocks and compiling findings, read the SHIELD rubric below and assign a score of 0, 1, or 2 to each letter. Show the scoring breakdown to yourself (internal reasoning, not to the caller).
+1. **Score each criterion.** After completing all review passes (or the focused pass if `<task>` specified one) and compiling findings, read the SHIELD rubric below and assign a score of 0, 1, or 2 to each letter. Show the scoring breakdown to yourself (internal reasoning, not to the caller).
 
 2. **Apply the hard-fail rule.** If any letter scores 0, do not deliver — go to step 3 immediately.
 
@@ -29,11 +29,11 @@ Before delivering a review, the Reviewer evaluates its own output against the SH
 
 ### S — SCAN ALL PASSES COMPLETE
 
-_Did I execute all review passes specified in the `<review-focus>` block — not skipping, truncating, or partial-applying any pass?_
+_Did I execute all review passes required — not skipping, truncating, or partial-applying any pass?_
 
-- **0** — Skipped an entire review pass specified in the `<review-focus>` block. Did not load all review skill files. This is a hard fail — the review is not a review, it's a partial opinion.
-- **1** — Ran all specified passes but one was truncated (e.g., security pass stopped after injection analysis without checking authentication, access control, or dependencies). Some files or functions were not examined in one or more passes.
-- **2** — Executed every pass specified in the `<review-focus>` block in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively.
+- **0** — Skipped an entire review pass. Did not load all review skill files. This is a hard fail — the review is not a review, it's a partial opinion.
+- **1** — Ran all required passes but one was truncated (e.g., security pass stopped after injection analysis without checking authentication, access control, or dependencies). Some files or functions were not examined in one or more passes.
+- **2** — Executed every required pass in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively. If `<task>` specified a focused analysis, executed that focused pass in full.
 
 ### H — HOLD FINDINGS FIRM ACROSS PASSES
 

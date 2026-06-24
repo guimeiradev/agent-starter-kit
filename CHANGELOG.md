@@ -1,6 +1,12 @@
 # Changelog
 
 ```log
+0.8.0 - 2026/06/24
+refactor(reviewer): safety net identity — removed "three critics" framing; Reviewer is now the safety net that catches what was dropped, runs all three lenses (coherence, quality, security)
+refactor(reviewer): trimmed Red Lines to persona-specific only — removed process-related prohibitions already covered by review skills and SHIELD rubric
+refactor(review-loop): restore multi-dispatch tiers with <task> focus — Standard (2 dispatches) and Full (3 dispatches) tiers restored for MoE context window management; focus now stated in <task> itself, no separate `<review-focus>` block
+refactor(self-review): remove `<review-focus>` references — SHIELD rubric updated for task-driven focus
+
 0.7.9 - 2026/06/23
 refactor(configure-cli): improve agentBindingBuilder() readability — eliminated nested if/else, consolidated jq calls into linear flow with separate conditionals for temperature, top_p, and thinking; each step builds on previous result for clear data flow
 feat(configure-cli): emit reasoningEffort alongside reasoning.effort — flat `reasoningEffort` field added for opencode pass-through compatibility per docs (https://opencode.ai/docs/agents/#additional); both nested and flat formats emitted for max provider compatibility

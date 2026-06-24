@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.1 - 2026/06/24
+refactor(personas): align identities with main framework — all 5 persona identities trimmed to single paragraphs; operational guidance moved to Playbook/Red Lines, only character and principles remain
+
 0.8.0 - 2026/06/24
 refactor(reviewer): safety net identity — removed "three critics" framing; Reviewer is now the safety net that catches what was dropped, runs all three lenses (coherence, quality, security)
 refactor(reviewer): trimmed Red Lines to persona-specific only — removed process-related prohibitions already covered by review skills and SHIELD rubric

@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.4 - 2026/06/24
+fix(self-review): adapt SHIELD dimensions for all pass types — S-dimension simplified, H-dimension generalized, E/L/D dimensions made pass-agnostic (grounding, evidence, external factors) instead of pass-specific; all dimensions now work for both full and focused reviews
+
 0.8.3 - 2026/06/24
 fix(self-review): SHIELD S-dimension handles focused reviews — rubric now explicitly scores based on required passes (focused pass only when task specifies focus, all three when no focus); eliminates ambiguity in scoring when task scopes to single pass
 

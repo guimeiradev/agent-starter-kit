@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.3 - 2026/06/24
+fix(self-review): SHIELD S-dimension handles focused reviews — rubric now explicitly scores based on required passes (focused pass only when task specifies focus, all three when no focus); eliminates ambiguity in scoring when task scopes to single pass
+
 0.8.2 - 2026/06/24
 fix(reviewer): restructure playbook for progress file discipline — step 3 reads skill(s) in full before proceeding, step 4 initializes progress files, step 5 executes each phase thoroughly with calming guidance; Identity adds depth-over-completeness principle; Red Line enforces progress file timing
 

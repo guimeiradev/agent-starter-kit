@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.2 - 2026/06/24
+fix(reviewer): restructure playbook for progress file discipline — step 3 reads skill(s) in full before proceeding, step 4 initializes progress files, step 5 executes each phase thoroughly with calming guidance; Identity adds depth-over-completeness principle; Red Line enforces progress file timing
+
 0.8.1 - 2026/06/24
 refactor(personas): align identities with main framework — all 5 persona identities trimmed to single paragraphs; operational guidance moved to Playbook/Red Lines, only character and principles remain
 

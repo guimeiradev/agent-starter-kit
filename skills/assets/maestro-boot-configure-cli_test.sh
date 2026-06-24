@@ -4,7 +4,7 @@
 # @usage        maestro-boot-configure-cli_test.sh
 # @output       PASS/FAIL per test case, summary at end.
 # @requires     bash v4+, yq v4+, jq v1.6+
-# @version      0.1.4
+# @version      0.1.5
 # @updated      2026-06-24
 set -euo pipefail
 
@@ -384,6 +384,54 @@ EOF
     return
   fi
   echo "PASS reviewer agent has permission.bash.* = ask"
+  passCount=$((passCount + 1))
+
+  coderGitCleanDeny=$(jq -r '.agent.coder.permission.bash["git clean *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitCleanDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git clean * = deny
+  expected deny, got: $coderGitCleanDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git clean * = deny"
+  passCount=$((passCount + 1))
+
+  reviewerGitCleanDeny=$(jq -r '.agent.reviewer.permission.bash["git clean *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$reviewerGitCleanDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL reviewer agent has permission.bash git clean * = deny
+  expected deny, got: $reviewerGitCleanDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS reviewer agent has permission.bash git clean * = deny"
+  passCount=$((passCount + 1))
+
+  coderGitResetDeny=$(jq -r '.agent.coder.permission.bash["git reset *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitResetDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git reset * = deny
+  expected deny, got: $coderGitResetDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git reset * = deny"
+  passCount=$((passCount + 1))
+
+  coderGitRebaseDeny=$(jq -r '.agent.coder.permission.bash["git rebase *"] // "missing"' "$testDir/opencode.json")
+  if [[ "$coderGitRebaseDeny" != "deny" ]]; then
+    cat <<EOF
+FAIL coder agent has permission.bash git rebase * = deny
+  expected deny, got: $coderGitRebaseDeny
+EOF
+    failCount=$((failCount + 1))
+    return
+  fi
+  echo "PASS coder agent has permission.bash git rebase * = deny"
   passCount=$((passCount + 1))
 }
 

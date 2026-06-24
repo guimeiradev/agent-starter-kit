@@ -11,7 +11,7 @@
 # @usage        maestro-boot-configure-cli.sh
 # @output       Summary line with agent count, or nothing if no CLI config found.
 # @requires     bash v4+, yq v4+, jq v1.6+, ps
-# @version      0.6.11
+# @version      0.6.12
 # @updated      2026-06-24
 #
 # ── Thinking/Reasoning Configuration ─────────────────────────────────────────
@@ -301,6 +301,11 @@ applyPermissionProfile() {
       "curl *": "deny",
       "wget *": "deny",
       "sudo *": "deny",
+      "git clean *": "deny",
+      "git reset *": "deny",
+      "git rebase *": "deny",
+      "git push --force *": "deny",
+      "git push -f *": "deny",
       "bash skills/assets/*.sh *": "allow",
       "yq *": "allow",
       "jq *": "allow",
@@ -386,6 +391,11 @@ applyPermissionProfile() {
       "curl *": "deny",
       "wget *": "deny",
       "sudo *": "deny",
+      "git clean *": "deny",
+      "git reset *": "deny",
+      "git rebase *": "deny",
+      "git push --force *": "deny",
+      "git push -f *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",
@@ -463,6 +473,11 @@ applyPermissionProfile() {
       "curl *": "deny",
       "wget *": "deny",
       "sudo *": "deny",
+      "git clean *": "deny",
+      "git reset *": "deny",
+      "git rebase *": "deny",
+      "git push --force *": "deny",
+      "git push -f *": "deny",
       "mkdir *": "allow",
       "yq *": "allow",
       "jq *": "allow",
@@ -552,6 +567,11 @@ applyPermissionProfile() {
       "curl *": "deny",
       "wget *": "deny",
       "sudo *": "deny",
+      "git clean *": "deny",
+      "git reset *": "deny",
+      "git rebase *": "deny",
+      "git push --force *": "deny",
+      "git push -f *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",
@@ -629,6 +649,11 @@ applyPermissionProfile() {
       "curl *": "deny",
       "wget *": "deny",
       "sudo *": "deny",
+      "git clean *": "deny",
+      "git reset *": "deny",
+      "git rebase *": "deny",
+      "git push --force *": "deny",
+      "git push -f *": "deny",
       "yq *": "allow",
       "jq *": "allow",
       "mktemp *": "allow",

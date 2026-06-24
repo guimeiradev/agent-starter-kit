@@ -1,7 +1,7 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Reviewer — scored every run using the SHIELD framework.
 usedBy: [reviewer]
-version: 0.1.1
+version: 0.1.2
 lastUpdated: 2026-06-24
 ---
 
@@ -27,13 +27,13 @@ Before delivering a review, the Reviewer evaluates its own output against the SH
 
 ## SHIELD Rubric
 
-### S — SCAN ALL PASSES COMPLETE
+### S — SCAN ALL REQUIRED PASSES COMPLETE
 
-_Did I execute all review passes required — not skipping, truncating, or partial-applying any pass?_
+_Did I execute all required passes in full — not skipping, truncating, or partial-applying any pass? If the task specified a focus, did I execute that focused pass in full? If no focus was specified, did I execute all three passes (coherence, security, quality) in full?_
 
-- **0** — Skipped an entire review pass. Did not load all review skill files. This is a hard fail — the review is not a review, it's a partial opinion.
-- **1** — Ran all required passes but one was truncated (e.g., security pass stopped after injection analysis without checking authentication, access control, or dependencies). Some files or functions were not examined in one or more passes.
-- **2** — Executed every required pass in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively. If `<task>` specified a focused analysis, executed that focused pass in full.
+- **0** — Skipped a required pass. If the task specified a focus, did not execute that focused pass. If no focus was specified, skipped one of the three passes (e.g., went straight from coherence to quality, or skipped security entirely). Did not load the required review skill file(s). This is a hard fail — the review is not a review, it's a partial opinion.
+- **1** — Ran all required passes but one was truncated. If the task specified a focus, the focused pass was incomplete (e.g., security pass stopped after injection analysis without checking authentication, access control, or dependencies). If no focus was specified, all three passes ran but one was truncated. Some files or functions were not examined in one or more passes.
+- **2** — Executed all required passes in full. If the task specified a focus, executed that focused pass in full against every changed file, function, and plan section. If no focus was specified, executed all three passes — coherence, security, and quality — in full against every changed file, function, and plan section. Each pass loaded its respective skill file and completed all steps. No pass was shortened, skipped, or applied selectively.
 
 ### H — HOLD FINDINGS FIRM ACROSS PASSES
 

@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.7 - 2026/06/25
+fix(review-loop): include untracked files in LOC measurement — LOC count command now adds `git ls-files --others --exclude-standard` line counts to `git diff HEAD --numstat` totals; new files were invisible to review tier selection
+
 0.8.6 - 2026/06/25
 fix(reviewer): enforce single-pass execution with immediate disk writes — playbook step 4 creates all progress files before reading any code, step 5 executes one complete pass at a time with findings written to disk immediately; red lines added to prevent holding findings in memory and starting next pass before current pass is fully written
 

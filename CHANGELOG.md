@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.8.6 - 2026/06/25
+fix(reviewer): enforce single-pass execution with immediate disk writes — playbook step 4 creates all progress files before reading any code, step 5 executes one complete pass at a time with findings written to disk immediately; red lines added to prevent holding findings in memory and starting next pass before current pass is fully written
+
 0.8.5 - 2026/06/24
 fix(configure-cli): robotic humor thinking budget 0→4096 — thinking re-enabled with minimal budget instead of disabled; reasoning effort mapped to low instead of none
 fix(configure-cli): introvert thinking budget 10240→8192 — aligned with industry effort-level estimates for hard tasks

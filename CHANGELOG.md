@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.9.1 - 2026/06/26
+refactor(self-review): improve DRAFT rubric — add scope mode, goal, assumptions, rule contradictions, finalize sections, planned commits; add gather-evidence step; restructure procedure
+refactor(reviewer): restructure plan adversarial review with progress file pattern — 8 review phases with disk-write gates; add completeness checks; align acceptance criteria and test spec checks to main framework
+
 0.9.0 - 2026/06/26
 refactor(architect): progressive plan construction with per-phase delta and complexity — playbook restructured with disk writes between each step; step 6 is rough phase outline, step 7 is per-phase loop (name methods, stress-test, complexity check, build); plan file is external memory
 refactor(architect): replace global before/after with per-phase before/after

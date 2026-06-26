@@ -1,6 +1,18 @@
 # Changelog
 
 ```log
+1.0.0 - 2026/06/26
+refactor(architect): progressive plan construction with per-phase delta and complexity — playbook restructured with disk writes between each step; step 6 is rough phase outline, step 7 is per-phase loop (name methods, stress-test, complexity check, build); plan file is external memory
+refactor(architect): replace global before/after with per-phase before/after
+refactor(architect): add information flow trace — traces request path from user entry through layers and back
+refactor(architect): add explicit method signatures per phase
+refactor(architect): reference files per phase for Coder style matching
+refactor(architect): cap test specs at 1 per lens per method
+refactor(architect): expand Goal from one-sentence to problem-why-success
+refactor(coder): step 5a checks plan reference files first
+refactor(self-review): update DRAFT rubric for new plan structure
+refactor(reviewer): update adversarial plan review for new structure
+
 0.8.8 - 2026/06/25
 feat(configure-cli): add explicit .memory subdirectory permissions — .memory/plan/*, .memory/todo/*, .memory/reviews/*, .memory/session/* added to edit and external_directory for all persona profiles; agents no longer prompt for permission to write to .memory subdirectories
 feat(configure-cli): add mkdir permission to architect and reviewer — all agents now have mkdir * allowed; previously architect and reviewer were denied directory creation

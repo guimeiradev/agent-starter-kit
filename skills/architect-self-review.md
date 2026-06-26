@@ -1,47 +1,44 @@
 ---
 shortDescription: Deterministic self-evaluation rubric for Architect — scored every run using the DRAFT framework.
 usedBy: [architect]
-version: 0.2.0
+version: 0.2.2
 lastUpdated: 2026-06-26
 ---
 
 ## Purpose
 
-Before delivering a plan, the Architect evaluates its own output against the DRAFT rubric. Each letter is scored 0, 1, or 2. The total determines whether to deliver, rewrite, or abort. This replaces subjective self-assessment with a deterministic checklist aligned with the adversarial review skill's validation passes.
+Before delivering a plan, the Architect evaluates its own output against the DRAFT rubric. Each letter is scored 0, 1, or 2. The total determines whether to deliver, rewrite, or abort.
 
 ## Procedure
 
-1. **Score each criterion.** After completing the plan, read the DRAFT rubric below and assign a score of 0, 1, or 2 to each letter. Show the scoring breakdown to yourself (internal reasoning, not to the user).
+1. **Gather evidence.** Before scoring, run verification commands to collect proof — `test -f` for file paths, `rg` for entities, `wc -l` for LOC estimates. Choose commands that fit your plan.
 
-2. **Apply the hard-fail rule.** If any letter scores 0, do not deliver — go to step 3 immediately.
+2. **Score.** Read the DRAFT rubric below. For each letter, assign 0, 1, or 2. Quote the matching level and cite specific evidence from your work.
 
-3. **Determine action by total score:**
-    - **9 – 10** — **DELIVER** — Plan meets all criteria. Deliver to user.
-    - **7 – 8** — **FIX the scored < 2 criteria.**
-      a. Identify which letters scored below 2.
-      b. Fix those gaps automatically (do NOT consult the user).
-      c. Re-score, then deliver if 9-10.
-      d. If still below 9-10, retry once more.
-      e. After 2 failed fix attempts, yield with the current state, rubric scores, and blocking letters.
-    - **0 – 6** — **RESTART** — The plan is fundamentally broken. Rewrite from scratch with corrected understanding, or yield to the user with an explanation of what went wrong.
+3. **Determine action.** If any letter scores 0, RESTART immediately. Otherwise, use the total score:
+    - **9 – 10** — **DELIVER**
+    - **7 – 8** — **FIX** the letters that scored below 2. Fix automatically (do NOT consult the user). Re-score, then deliver if 9-10. After 2 failed fix attempts, yield with current state and blocking letters.
+    - **0 – 6** — **RESTART** — Rewrite from scratch, or yield to the user with an explanation.
 
 ## DRAFT Rubric
 
+**Exception:** If the architect yielded blocking questions instead of a plan (playbook step 12), skip scoring — the yield is the correct action.
+
 ### D — DELTA
 
-_Did I correctly classify intent, extract sub-requests, and name methods explicitly?_
+_Did I correctly classify intent, choose scope mode, extract sub-requests, and name methods explicitly?_
 
-- **0** — Wrong task classification (plan revision treated as new, or vice versa). Dropped a sub-request. Method names missing or vague.
-- **1** — Right classification, but missed an implicit requirement, method names are vague, or stress tests applied but results not reflected in phases.
-- **2** — Correctly classified intent, extracted all key entities, challenged assumptions before proceeding. Method signatures are explicit. Complex request persisted to disk.
+- **0** — Wrong task classification (plan revision treated as new, or vice versa). Dropped a sub-request. Scope mode not stated or chosen with no rationale. Method names missing or vague.
+- **1** — Right classification, but scope mode stated without rationale, or method names are vague.
+- **2** — Correctly classified intent, extracted all key entities, chose the right scope mode with stated rationale. Method signatures are explicit. Complex request persisted to disk.
 
 ### R — REALITY
 
-_Are each phase's before/after explicit, the information flow traced, and the plan grounded in the codebase?_
+_Is the goal grounded, each phase's before/after explicit, the information flow traced, assumptions verified, rules respected, and the plan grounded in the codebase?_
 
-- **0** — Per-phase before/after missing. Information flow section missing or not traced. Did not read context files or architecture skills before writing.
-- **1** — Before/after present per phase but not verified against the codebase. Information flow traced but missing layers or handoffs.
-- **2** — Every phase has explicit before/after verified against the codebase. Information flow traces user entry → layers → infra and back. Stress tests applied with results documented.
+- **0** — Goal section missing or vacuous. Per-phase before/after missing. Information flow section missing or not traced. Did not read context files or architecture skills before writing.
+- **1** — Goal present but vague. Before/after present per phase but not verified against the codebase. Information flow traced but missing layers or handoffs. Key assumptions left unverified. Implementation approach may contradict loaded rules but not verified.
+- **2** — Goal clearly states the problem, why it matters, and concrete verifiable outcomes. Every phase has explicit before/after verified against the codebase. Information flow traces user entry → layers → infra and back. Key assumptions verified. Implementation approach verified against loaded rules — no contradictions. Stress tests applied with results documented.
 
 ### A — ACCEPTANCE
 
@@ -53,11 +50,11 @@ _Are criteria defined, measurable, and mapped to phases?_
 
 ### F — FILES
 
-_Do all referenced paths exist, reference files listed per phase, entities verified, phase dependencies acyclic, and phases within LOC limits?_
+_Do all referenced paths exist, reference files listed per phase, entities verified, phase dependencies acyclic, finalize sections present, planned commits present, and phases within LOC limits?_
 
 - **0** — Plan references files or entities that do not exist without verification. Reference files not listed per phase. Phase dependency chain has a cycle or missing link. Layer boundary violations. Any phase exceeds 800 LOC.
-- **1** — All file references verified, but one or more phases missing reference file suggestions. Phase ordering missing explicit dependency declarations. One or more entities not confirmed. One or more phases exceed 600 LOC but none exceed 800.
-- **2** — Every existing file path confirmed with `test -f`. Reference files listed per phase (selected from `ls` output). Every entity confirmed or marked "to create." Phase dependencies acyclic and declared. Layer boundaries respected. No strikethroughs, "Revised:" annotations, or diff-style markers. All phases ≤600 LOC.
+- **1** — All file references verified, but one or more phases missing reference file suggestions. Phase ordering missing explicit dependency declarations. One or more entities not confirmed. One or more phases exceed 600 LOC but none exceed 800. Finalize sections partially present. One or more phases missing planned commits.
+- **2** — Every existing file path confirmed with `test -f`. Every new file's parent directory confirmed. Reference files listed per phase (selected from `ls` output). Every entity confirmed or marked "to create." Phase dependencies acyclic and declared. Layer boundaries respected. No strikethroughs, "Revised:" annotations, or diff-style markers. Finalize sections complete (Feature Map, Changelog, Estimated Total LOC). Every phase has planned commits. All phases ≤600 LOC.
 
 ### T — TESTS
 
@@ -65,13 +62,12 @@ _Are test specs per method with max 1 per lens, mapped to criteria?_
 
 - **0** — Missing test specifications for one or more methods. Test specs present but none map to acceptance criteria.
 - **1** — Tests present for all methods but one or more methods lack a lens (Good/Bad/Ugly). One or more specs are orphans. One or more methods have more than 1 test per lens (over-specification).
-- **2** — Every method has exactly 1 Good, 1 Bad, 1 Ugly test. Every test maps to at least one acceptance criterion. No orphan tests. Test names, inputs, and outcomes are concrete. No method exceeds the 1-per-lens cap.
+- **2** — Every method has exactly 1 Good, 1 Bad, 1 Ugly test. Every test maps to at least one acceptance criterion. Every acceptance criterion has at least one test verifying it. No orphan tests. Test names, inputs, and outcomes are concrete. No method exceeds the 1-per-lens cap.
 
 ## Guardrails
 
-- Never deliver if any letter scores 0 — regardless of total. A zero is a hard fail.
+- A letter without a specific evidence citation scores 0.
 - Never skip scoring any letter — all 5 must be evaluated every run.
 - The rubric is fixed — do not add or remove criteria. If a criterion proves inadequate, file a framework change request.
-- When fixing gaps (score 7-8 range), only address the letters that scored below 2. Do not rework letters that already scored 2. Fix automatically — do NOT stop to consult the user.
-- After 2 failed fix attempts, yield — do not keep looping. Present the current state, rubric scores, and blocking letters to the user.
-- The "restart" action (score 0-6) means: do not deliver the current output. Rewrite the plan from scratch with corrected understanding, or yield to the user with a clear explanation of the failure mode.
+- When fixing gaps (7-8 range), only fix letters that scored below 2. Do not rework letters that already scored 2.
+- After 2 failed fix attempts, yield — do not keep looping.

@@ -1,7 +1,7 @@
 # Changelog
 
 ```log
-1.0.0 - 2026/06/26
+0.9.0 - 2026/06/26
 refactor(architect): progressive plan construction with per-phase delta and complexity — playbook restructured with disk writes between each step; step 6 is rough phase outline, step 7 is per-phase loop (name methods, stress-test, complexity check, build); plan file is external memory
 refactor(architect): replace global before/after with per-phase before/after
 refactor(architect): add information flow trace — traces request path from user entry through layers and back

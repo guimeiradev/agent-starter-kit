@@ -1,6 +1,11 @@
 # Changelog
 
 ```log
+0.9.2 - 2026/06/26
+refactor(dispatch): consolidate providers to one per CLI — merge qwen into deepseek entry; users swap model names instead of adding new provider entries
+docs(readme): update provider references — simplify Customization and FAQ sections to reflect one-per-CLI structure; mention OpenCode Go as coding plan for deepseek family
+docs(contributing): add provider list policy — models are examples, not a registry; PRs/issues adding providers will be declined
+
 0.9.1 - 2026/06/26
 refactor(self-review): improve DRAFT rubric — add scope mode, goal, assumptions, rule contradictions, finalize sections, planned commits; add gather-evidence step; restructure procedure
 refactor(reviewer): restructure plan adversarial review with progress file pattern — 8 review phases with disk-write gates; add completeness checks; align acceptance criteria and test spec checks to main framework

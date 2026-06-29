@@ -35,11 +35,22 @@ Infer the destination from the current working directory, task description, or u
 
 1. **Infer context.** Check CWD (`pwd`), task description, and conversation for company signals using the mapping above. If ambiguous, ask: *"Onde salvo no vault — Sinaf, Hcor, BNP ou Pessoal?"*
 
-2. **Build the note.** Use the template below. File name: `YYYY-MM-DD-slug-do-problema.md`.
+2. **Find related notes.** Before building the note, scan the destination folder and sibling folders for existing notes about the same project, feature, or component:
+   - List files in `02-Empresas/[Empresa]/Problemas/`, `02-Empresas/[Empresa]/Projetos/`, etc.
+   - Match by project name, feature name, or shared keywords in filenames.
+   - Collect all matches as `[[filename-without-extension]]` links.
+   - If the current task is a fix, feature, or refactor — it should link to prior notes about the same component.
 
-3. **Write to vault.** Create the file at the resolved path. If the directory does not exist, create it.
+3. **Build the note.** Use the template below. File name: `YYYY-MM-DD-slug-do-problema.md`.
+   - Fill `related:` frontmatter with matched `[[links]]` from step 2.
+   - Add a `## Notas Relacionadas` section at the bottom listing the same links with a one-line description of why they're related.
+   - Inside the note body, use `[[link]]` inline where relevant (e.g. "Este fix complementa [[2026-06-10-bug-autenticacao]]").
 
-4. **Report.** Tell the user: `Salvo em 02-Empresas/Sinaf/Problemas/2026-06-26-nome.md`
+4. **Update existing related notes.** For each note found in step 2 that does NOT already link back to this new note — append the new note's link to its `related:` frontmatter.
+
+5. **Write to vault.** Create the file at the resolved path. If the directory does not exist, create it.
+
+6. **Report.** Tell the user: `Salvo em 02-Empresas/Sinaf/Problemas/2026-06-26-nome.md` and list related notes found.
 
 ## Note Template
 
@@ -71,6 +82,9 @@ related: []
 
 ## Referências
 <links, docs, tickets>
+
+## Notas Relacionadas
+- [[nota-relacionada]] — <por que está relacionada>
 ```
 
 ## Sync (obrigatório após salvar)

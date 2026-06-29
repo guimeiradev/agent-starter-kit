@@ -73,9 +73,33 @@ related: []
 <links, docs, tickets>
 ```
 
+## Sync (obrigatório após salvar)
+
+Após criar o arquivo no vault, executar:
+
+```bash
+# Detecta vault path dinamicamente — funciona em qualquer máquina
+VAULT=$(git -C ~/.agents rev-parse --show-superproject-working-tree 2>/dev/null)
+
+# Fallback: se ~/.agents não for submodule (instalação manual)
+if [ -z "$VAULT" ]; then
+  VAULT=$(dirname "$(readlink -f ~/.agents 2>/dev/null || echo ~/.agents)")
+fi
+
+cd "$VAULT"
+git add -A
+git commit -m "vault: <título-da-nota>"
+git push
+```
+
+Substituir `<título-da-nota>` pelo nome do arquivo criado (sem extensão).
+
+Isso garante que o vault é atualizado no GitHub e todas as máquinas recebem as mudanças via pull automático do obsidian-git.
+
 ## Guardrails
 
 - Never save credentials, tokens, or secrets to the vault.
 - If the task was purely conversational (no problem solved, no code written), skip saving unless the user asks.
 - Always use the frontmatter exactly as specified — Dataview queries depend on it.
 - Scripts and SQL go in the `## Scripts / Código` section with proper fenced blocks, not as raw text.
+- Always run the Sync block after saving — never save without pushing.

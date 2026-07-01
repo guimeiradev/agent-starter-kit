@@ -1,6 +1,12 @@
 # Changelog
 
 ```log
+0.9.3 - 2026/07/01
+feat(skills): donate generic-boot.md from main framework — lightweight alternative boot for quick fixes and simple tasks; adapted paths for starter-kit (agent-decision, task-tracking, code-quality-review, code-quality edict); removed Go-specific content
+docs(readme): add Quick Fixes (Developer Mode) section — generic boot as alternative for small fixes with invocation phrase
+docs(readme): clarify .agents/ is per-project, not a TUI plugin; clarify invocation phrases are first message per session
+docs(readme): add step 5 to describe task to Maestro; separate first-run Contextualizer dispatch as step 6
+
 0.9.2 - 2026/06/26
 refactor(dispatch): consolidate providers to one per CLI — merge qwen into deepseek entry; users swap model names instead of adding new provider entries
 docs(readme): update provider references — simplify Customization and FAQ sections to reflect one-per-CLI structure; mention OpenCode Go as coding plan for deepseek family

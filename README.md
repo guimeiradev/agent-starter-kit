@@ -28,12 +28,14 @@ The framework **learns as it works**. Corrections, preferences, and lessons are 
 
 ## Setup
 
-1. Clone into `.agents/` inside your project:
+1. Clone into `.agents/` inside your software project:
 
    ```bash
    cd /path/to/your/project
    git clone git@github.com:ntorga/agent-starter-kit.git .agents
    ```
+
+The `.agents/` directory lives inside your project — it's not a plugin you install once. Each project gets its own copy of the framework.
 
 2. Symlink the entry file to the project root:
 
@@ -41,10 +43,26 @@ The framework **learns as it works**. Corrections, preferences, and lessons are 
    ln -s .agents/AGENTS.md AGENTS.md
    ```
 
-3. Start the AI agent (e.g., `claude`, or whatever CLI you use).
-4. Say **"Please comply with AGENTS.md."** — this boots the Maestro and loads the framework.
-5. The Maestro orchestrates everything. On first run, it automatically dispatches the Contextualizer to map the codebase.
-6. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
+3. Start the AI agent interface (e.g., `claude`, `opencode` or whatever CLI/TUI you use).
+4. As the first message of every session, say:
+
+   ```
+   Please comply with AGENTS.md.
+   ```
+
+5. Describe what you want to build, fix, or change. The Maestro breaks it down, dispatches to specialized personas (Architect plans, Coder implements, Reviewer validates), and delivers the result.
+6. On first run, the Maestro automatically dispatches the Contextualizer to map the codebase before doing anything else.
+7. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
+
+### Quick Fixes (Developer Mode)
+
+For small fixes and simple tasks, you can skip the full orchestration boot. The generic boot skill (`skills/generic-boot.md`) loads rules, orients on context, and goes straight to coding with built-in self-review — no memory setup, no CLI configuration, no context verification overhead.
+
+As the first message of the session, say:
+
+```
+Read and follow @.agents/skills/generic-boot.md and wait for instructions.
+```
 
 ### OpenCode Configuration
 
@@ -79,7 +97,7 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **agent-decision** — persona decision-making framework with self-review rubrics
 - **agent-memory** — long-term and session memory across sessions
 - **architect-self-review** — DRAFT self-review rubric — plan quality gate
-- **boot** — session startup sequence
+- **boot** — session startup sequence (full boot for complex features)
 - **code-coherence-review** — logic coherence, correctness, and structural integrity checks
 - **code-quality-review** — rules-walk procedure for coding standards compliance
 - **code-sec-review** — OWASP-aligned security code review checklist
@@ -87,6 +105,7 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **context-maintenance** — schema and rules for `.context.md` files
 - **contextualizer-self-review** — TRACE self-review rubric — context generation quality gate
 - **dispatch** — how the Maestro assembles and sends work to personas
+- **generic-boot** — lightweight boot for quick fixes and simple tasks (developer-facing)
 - **loop-recovery** — structured recovery and escalation for retry loops
 - **review-loop** — LOC-based review tier selection with shapeshifter dispatch
 - **reviewer-architect-adversarial** — adversarial plan validation and assumption attack

@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.9.4 - 2026/07/02
+feat(reviewer): add dead code and duplication detection — code coherence review now includes dedicated phase for dead code detection (unused functions/variables/imports, unreachable code, commented-out blocks, obsolete TODOs, deprecated logic) with codebase-wide verification; new duplication detection phase identifies duplicated functions, logic blocks (5+ lines), copy-pasted constants, and reinvented utilities with line-by-line comparison; step count increased from 4 to 6; classification updated with dead code and duplication severity thresholds; guardrails expanded with verification requirements
+
 0.9.3 - 2026/07/01
 feat(skills): donate generic-boot.md from main framework — lightweight alternative boot for quick fixes and simple tasks; adapted paths for starter-kit (agent-decision, task-tracking, code-quality-review, code-quality edict); removed Go-specific content
 docs(readme): add Quick Fixes (Developer Mode) section — generic boot as alternative for small fixes with invocation phrase

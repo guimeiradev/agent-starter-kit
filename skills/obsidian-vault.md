@@ -7,13 +7,17 @@ lastUpdated: 2026-06-26
 
 ## Purpose
 
-Persist every completed task, bug fix, script, decision, concept explained, technique discovered, or pattern identified to the Obsidian vault at `/opt/obsidian-vault/Cerebro/`. This ensures knowledge built with the agent is never lost between sessions and is searchable from Obsidian. Save learnings proactively — the user should never need to ask.
+Persist every completed task, bug fix, script, decision, concept explained, technique discovered, or pattern identified to the Obsidian vault (cerebro-vault). This ensures knowledge built with the agent is never lost between sessions and is searchable from Obsidian. Save learnings proactively — the user should never need to ask.
 
 ## Vault Path
 
+Machine-agnostic — do not hardcode a path. Resolve it at runtime:
+
+```bash
+VAULT=$(cat ~/.claude/.vault-path 2>/dev/null)
 ```
-/opt/obsidian-vault/Cerebro/
-```
+
+`~/.claude/.vault-path` is written once per machine by `scripts/setup-claude.sh` (run after cloning cerebro-vault on a new machine). If the file is missing, run that script first.
 
 ## Context → Folder Mapping
 
@@ -93,11 +97,12 @@ Após criar o arquivo no vault, executar:
 
 ```bash
 # Detecta vault path dinamicamente — funciona em qualquer máquina
-VAULT=$(git -C ~/.agents rev-parse --show-superproject-working-tree 2>/dev/null)
+# (setup-claude.sh grava esse arquivo na primeira vez que roda em cada máquina)
+VAULT=$(cat ~/.claude/.vault-path 2>/dev/null)
 
-# Fallback: se ~/.agents não for submodule (instalação manual)
 if [ -z "$VAULT" ]; then
-  VAULT=$(dirname "$(readlink -f ~/.agents 2>/dev/null || echo ~/.agents)")
+  echo "~/.claude/.vault-path não encontrado. Rode scripts/setup-claude.sh nesta máquina primeiro." >&2
+  exit 1
 fi
 
 cd "$VAULT"

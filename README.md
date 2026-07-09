@@ -80,15 +80,9 @@ If the tools aren't installed or you're using a different CLI, the script exits 
 
 ```
 personas/    Specialized AI roles (who does the work)
-rules/       Constraints organized by authority level
+rules/       Constraints
 skills/      Reusable procedures and protocols
 ```
-
-## Rules Hierarchy
-
-- **Commandments** — absolute, never bypassed
-- **Edicts** — authoritative within scope, not bent
-- **Counsel** — wise guidance, may be deviated from with justification
 
 ## Skills
 
@@ -117,7 +111,7 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 
 - **Dispatch** — edit `skills/dispatch.md` to customize providers. The Providers list is pre-configured with one entry per CLI. Each persona defaults to `host`, which uses whatever model your CLI provides — no configuration needed.
 - Add new personas to `personas/` following the schema in `personas/README.md`
-- Add rules to `rules/commandments/`, `rules/edicts/`, or `rules/counsel/`
+- Add rules to `rules/`
 - Add skills to `skills/` following the schema in `skills/README.md`
 - Modify existing files to match your project's needs
 

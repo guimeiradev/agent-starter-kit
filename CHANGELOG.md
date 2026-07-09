@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.9.5 - 2026/07/09
+refactor(rules): flatten directory structure and remove hierarchy terminology — remove commandments/, edicts/, counsel/ subdirectories; move code-* rules into rules/code/ subdirectory (dropping code- prefix); replace hierarchy tier names with RFC language (MUST/SHOULD) in code-quality-review; rename SHIELD E dimension from "edicts traced" to "evidence traced"; purge all commandment/edict/counsel references from skills, personas, and README
+
 0.9.4 - 2026/07/02
 feat(reviewer): add dead code and duplication detection — code coherence review now includes dedicated phase for dead code detection (unused functions/variables/imports, unreachable code, commented-out blocks, obsolete TODOs, deprecated logic) with codebase-wide verification; new duplication detection phase identifies duplicated functions, logic blocks (5+ lines), copy-pasted constants, and reinvented utilities with line-by-line comparison; step count increased from 4 to 6; classification updated with dead code and duplication severity thresholds; guardrails expanded with verification requirements
 

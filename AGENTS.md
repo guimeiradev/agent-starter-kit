@@ -7,7 +7,7 @@ description: Entrypoint for AI agents. Read this first ALWAYS.
 
 - .agents/personas/ — agent identities
 - .agents/skills/ — reusable capabilities
-- .agents/rules/ — commandments, edicts, counsel
+- .agents/rules/ — constraints
 
 ## Boot Sequence
 

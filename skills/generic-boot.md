@@ -19,7 +19,7 @@ Lightweight session boot for quick fixes/features. Loads project standards witho
 
 1. **Setup.** Ensure `.memory/` exists and is in `.gitignore`. Create subdirectories: `plan/`, `todo/`, `reviews/`. If `.gitignore` does not exist, create it. Append `.memory/` if missing.
 
-2. **Load the rules.** Read all files under `rules/commandments/`, `rules/edicts/`, and `rules/counsel/`. State: "Rules loaded." If any directory does not exist, skip it and note the gap in delivery.
+2. **Load the rules.** Read all files under `rules/`. State: "Rules loaded." If the directory does not exist, note the gap in delivery.
 
 3. **Orient.** Read the top 3 `.context.md` files for directories you will touch, then `docs/FEATURE-MAP.md` if it exists, then `skills/code-arch/` if it exists (read the relevant architecture skill). Stop after reading these. If a referenced file does not exist, skip it and note the gap in delivery.
 
@@ -69,7 +69,7 @@ Lightweight session boot for quick fixes/features. Loads project standards witho
 
 7. **Maintain context.** After coding, run `git status` (if not in a git repo, skip this step). If output includes new directories or deleted files, follow the context maintenance skill (uses: `skills/context-maintenance.md`).
 
-8. **Self-review.** Dispatch a reviewer sub-agent (follows: `skills/dispatch.md`, uses: `personas/reviewer.md`) to review your changes. If sub-agent dispatch is not available, review your changes against the code review procedure (uses: `skills/code-quality-review.md`) and the reviewing edict (follows: `rules/edicts/code-quality.md`). If the reviewer finds substance issues (architecture violations, missing error paths, broken contracts), fix them before proceeding.
+8. **Self-review.** Dispatch a reviewer sub-agent (follows: `skills/dispatch.md`, uses: `personas/reviewer.md`) to review your changes. If sub-agent dispatch is not available, review your changes against the code review procedure (uses: `skills/code-quality-review.md`) and the reviewing rule (follows: `rules/code/quality.md`). If the reviewer finds substance issues (architecture violations, missing error paths, broken contracts), fix them before proceeding.
    - **Substance** — architecture violations, missing error paths, broken contracts.
    - **Form** — naming, style, consistency with surroundings.
    - **Prose** — instructions and descriptions must use concrete conditions instead of subjective qualifiers. Dense lines must be broken into sub-items.
@@ -78,4 +78,4 @@ Lightweight session boot for quick fixes/features. Loads project standards witho
 
 ## Guardrails
 
-- This skill does not override rules or commandments — it indexes them. If a rule says MUST, it still means MUST.
+- This skill does not override rules — it indexes them. If a rule says MUST, it still means MUST.

@@ -1,6 +1,10 @@
 # Changelog
 
 ```log
+0.9.6 - 2026/07/09
+feat(configure-cli): add Go tooling to build, coder, reviewer agents — gofmt, go vet, go mod tidy for build; full Go suite for coder; go vet/build/test/list/doc/version/env/fmt for reviewer; align with main framework
+fix(configure-cli): block git stash and dangerous git operations for non-build agents — deny git stash, git checkout --, git restore, git filter-branch, git cherry-pick, git worktree, git reflog expire across architect, coder, reviewer, contextualizer
+
 0.9.5 - 2026/07/09
 refactor(rules): flatten directory structure and remove hierarchy terminology — remove commandments/, edicts/, counsel/ subdirectories; move code-* rules into rules/code/ subdirectory (dropping code- prefix); replace hierarchy tier names with RFC language (MUST/SHOULD) in code-quality-review; rename SHIELD E dimension from "edicts traced" to "evidence traced"; purge all commandment/edict/counsel references from skills, personas, and README
 refactor(generic-boot): align with main framework — orient reads README.md first; reorder steps (track progress before state intent); dispatch coder and reviewer via skills/dispatch.md; fallback references rules/code/ and skills/code-*.md instead of inlining procedures

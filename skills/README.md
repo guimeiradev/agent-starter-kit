@@ -15,7 +15,6 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 - `context-maintenance` — How to maintain .context.md files and docs/FEATURE-MAP.md as the project evolves
 - `contextualizer-self-review` — TRACE self-review rubric — context generation quality gate
 - `dispatch` — Assembles sub-agent prompts with task brief
-- `generic-boot` — Lightweight session boot for quick fixes and simple tasks (developer-facing)
 - `loop-recovery` — Structured recovery and escalation for retry loops
 - `reviewer-architect-adversarial` — Adversarial plan validation — structural checks and assumption attack before implementation
 - `reviewer-handoff` — Structured review summary format with verdict logic and deterministic coverage scoring

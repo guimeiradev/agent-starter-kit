@@ -1,6 +1,6 @@
 # Agent Starter Kit
 
-> Describe what you need in plain language. The Maestro agent breaks it into tasks and routes each one to a specialized AI model.
+> Describe what you need in plain language. Work directly in quick mode, or boot the Maestro to break complex tasks into specialized sub-agent work.
 
 Agent Starter Kit is a Natural Language AI Harness (NLAH) — multi-model, pure Markdown, zero dependencies. The smartest model orchestrates while cheaper, faster ones handle the routine work — extending your premium coding plan (such as Claude Code) instead of burning it on everything.
 
@@ -44,25 +44,17 @@ The `.agents/` directory lives inside your project — it's not a plugin you ins
    ```
 
 3. Start the AI agent interface (e.g., `claude`, `opencode` or whatever CLI/TUI you use).
-4. As the first message of every session, say:
+4. As the first message of every session, choose a mode:
+   - **Full orchestration:** boot the Maestro to decompose, plan, dispatch, and review multi-step work:
 
-   ```
-   Please comply with AGENTS.md.
-   ```
+     ```
+     Please comply with @.agents/ENTRYPOINT.md
+     ```
 
-5. Describe what you want to build, fix, or change. The Maestro breaks it down, dispatches to specialized personas (Architect plans, Coder implements, Reviewer validates), and delivers the result.
-6. On first run, the Maestro automatically dispatches the Contextualizer to map the codebase before doing anything else.
+   - **Quick work (default):** just type your request. The CLI auto-loads `AGENTS.md` — your style book is already in context. No boot phrase needed.
+5. Describe what you want to build, fix, or change. In full orchestration mode, the Maestro breaks it down, dispatches to specialized personas (Architect plans, Coder implements, Reviewer validates), and delivers the result.
+6. On first run in full orchestration mode, the Maestro automatically dispatches the Contextualizer to map the codebase before doing anything else.
 7. (Optional) Customize — add personas, rules, skills, and providers to fit your project (see Customization below).
-
-### Quick Fixes (Developer Mode)
-
-For small fixes and simple tasks, you can skip the full orchestration boot. The generic boot skill (`skills/generic-boot.md`) loads rules, orients on context, and goes straight to coding with built-in self-review — no memory setup, no CLI configuration, no context verification overhead.
-
-As the first message of the session, say:
-
-```
-Read and follow @.agents/skills/generic-boot.md and wait for instructions.
-```
 
 ### OpenCode Configuration
 
@@ -99,7 +91,6 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - **context-maintenance** — schema and rules for `.context.md` files
 - **contextualizer-self-review** — TRACE self-review rubric — context generation quality gate
 - **dispatch** — how the Maestro assembles and sends work to personas
-- **generic-boot** — lightweight boot for quick fixes and simple tasks (developer-facing)
 - **loop-recovery** — structured recovery and escalation for retry loops
 - **review-loop** — LOC-based review tier selection with shapeshifter dispatch
 - **reviewer-architect-adversarial** — adversarial plan validation and assumption attack
@@ -114,6 +105,7 @@ Skills codify procedures that personas reference. They answer "how to do X" so p
 - Add rules to `rules/`
 - Add skills to `skills/` following the schema in `skills/README.md`
 - Modify existing files to match your project's needs
+- **AGENTS.md** — edit to add your project's coding conventions, language-specific rules, or personal preferences. This file loads automatically in quick mode, so anything you add here shapes every session without booting the Maestro.
 
 Each directory has a README with the full schema definition.
 
@@ -126,6 +118,14 @@ GSD, GStack, and Gas Town are software — they lock you into dependencies, runt
 Most harnesses are built around dense, expensive models and burn thousands of tokens on guidance you'll never use. This kit is a **scalpel**: minimal by design, tuned for cheaper MoE models like DeepSeek, GLM, Kimi, and Qwen. You pay only for the context you need. When your project grows, you extend it — add a persona, tweak a rule, swap a provider — all in plain text. Other tools produce code once and walk away. This framework learns, remembers, and adapts across every session.
 
 *\* Almost — one optional shell script for OpenCode auto-configuration and a YAML provider list in `skills/dispatch.md`. No runtimes, no dependencies, no build steps.*
+
+### Full orchestration or quick mode — which do I use?
+
+**Full orchestration** boots the Maestro — an orchestrator that decomposes your request, plans with the Architect, dispatches to the Coder, validates with the Reviewer, and maps the codebase with the Contextualizer. It carries memory across sessions, tracks work in to-do files, and manages a review pipeline. Use it for complex multi-step work where you want structured planning, adversarial review, or cross-session memory.
+
+**Quick mode** is the default. Just type your request and the CLI works on it directly — your `AGENTS.md` style book is auto-loaded so the agent follows your coding conventions without any boot ceremony. Use it for everyday work: bug fixes, features, refactors, anything where you know what you want and just need it done.
+
+The trade-off is speed vs. structure. Quick mode is faster and cheaper — one agent, no overhead. Full orchestration is more thorough — multiple specialized agents, review gates, and resumable state — but costs more tokens and requires a boot phrase each session.
 
 ### Why multi-model?
 

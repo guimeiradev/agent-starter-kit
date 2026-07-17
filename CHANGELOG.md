@@ -1,6 +1,12 @@
 # Changelog
 
 ```log
+0.9.7 - 2026/07/17
+feat(agents): create AGENTS.md style book — distilled from rules/ and skills/ into a single auto-loaded entrypoint for quick dev work; replaces generic-boot.md for the common case; covers function extraction, duplication, single responsibility, naming, control flow, structure, data trust boundary, error handling, comments, logging, testing, debugging, code review, git, and context maintenance; pure style, no workflow opinions (no commit authorization rules, no branch aborts, no ambiguity escalation protocol, no dispatch references)
+refactor(agents): rename AGENTS.md to ENTRYPOINT.md — full orchestration boot (Maestro, personas, dispatch) now invoked via "Please comply with @.agents/ENTRYPOINT.md" instead of being the default entrypoint
+docs(readme): update setup for two-mode workflow — quick work is the default (just type, AGENTS.md auto-loads), full orchestration via ENTRYPOINT phrase; remove Quick Fixes (Developer Mode) section and generic-boot reference from skills list
+docs(skills): remove generic-boot from skills/README.md available skills list
+
 0.9.6 - 2026/07/09
 feat(configure-cli): add Go tooling to build, coder, reviewer agents — gofmt, go vet, go mod tidy for build; full Go suite for coder; go vet/build/test/list/doc/version/env/fmt for reviewer; align with main framework
 fix(configure-cli): block git stash and dangerous git operations for non-build agents — deny git stash, git checkout --, git restore, git filter-branch, git cherry-pick, git worktree, git reflog expire across architect, coder, reviewer, contextualizer

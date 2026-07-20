@@ -1,0 +1,66 @@
+name: Sync upstream (ntorga/agent-starter-kit)
+
+on:
+  schedule:
+    - cron: "0 6 * * *"  # every day at 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/ntorga/agent-starter-kit.git
+
+      - name: Fetch upstream
+        run: git fetch upstream main
+
+      - name: Try clean merge
+        id: merge
+        run: |
+          if git merge upstream/main --no-edit; then
+            echo "clean=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "clean=false" >> "$GITHUB_OUTPUT"
+            git merge --abort
+          fi
+
+      - name: Push clean merge to main
+        if: steps.merge.outputs.clean == 'true'
+        run: |
+          if git diff --quiet HEAD origin/main -- 2>/dev/null; then
+            echo "Already up to date, nothing to push."
+          else
+            git push origin HEAD:main
+          fi
+
+      - name: Open PR on conflict
+        if: steps.merge.outputs.clean == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="sync-upstream-conflict-$(date +%Y%m%d)"
+          git checkout -b "$BRANCH"
+          git merge upstream/main --no-edit || true
+          git add -A
+          git commit -m "sync: upstream merge with conflicts, needs manual resolution" --allow-empty
+          git push origin "$BRANCH" -f
+          gh pr create \
+            --title "Upstream sync has conflicts — manual resolution needed" \
+            --body "Automated sync from ntorga/agent-starter-kit hit a merge conflict. Resolve manually on this branch and merge into main." \
+            --base main --head "$BRANCH" || echo "PR may already be open"

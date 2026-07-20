@@ -1,6 +1,9 @@
 # Changelog
 
 ```log
+0.9.8 - 2026/07/20
+refactor(agents): strengthen AGENTS.md distillation of rules and skills — restore imperative force lost in distillation; add Style Proximity section (read sibling files, match local convention) required by coder-self-review and code-quality-review skills; add single-letter variable ban, Readability Over Performance (KISS), Native Tooling, branch name prefixes, Schema Changes callout; add advisory rules for no-else (metalanguages exception), squash/rebase avoidance, Hardcoding, Dependency Audit on Feature Change, testing setup/teardown inline, Frontend accessibility
+
 0.9.7 - 2026/07/17
 feat(agents): create AGENTS.md style book — distilled from rules/ and skills/ into a single auto-loaded entrypoint for quick dev work; replaces generic-boot.md for the common case; covers function extraction, duplication, single responsibility, naming, control flow, structure, data trust boundary, error handling, comments, logging, testing, debugging, code review, git, and context maintenance; pure style, no workflow opinions (no commit authorization rules, no branch aborts, no ambiguity escalation protocol, no dispatch references)
 refactor(agents): rename AGENTS.md to ENTRYPOINT.md — full orchestration boot (Maestro, personas, dispatch) now invoked via "Please comply with @.agents/ENTRYPOINT.md" instead of being the default entrypoint

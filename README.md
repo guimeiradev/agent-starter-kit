@@ -48,7 +48,7 @@ The `.agents/` directory lives inside your project — it's not a plugin you ins
    - **Full orchestration:** boot the Maestro to decompose, plan, dispatch, and review multi-step work:
 
      ```
-     Please comply with @.agents/ENTRYPOINT.md
+     Please comply with @.agents/ENTRYPOINT.md file.
      ```
 
    - **Quick work (default):** just type your request. The CLI auto-loads `AGENTS.md` — your style book is already in context. No boot phrase needed.

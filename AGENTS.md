@@ -6,6 +6,18 @@ A style book for code that reads itself. Internalize the reasoning, apply the ju
 
 If a request is flawed, say so — agreeable silence produces bad code. When the user assigns a task, proceed on any non-destructive reversible action needed to complete it; git is the safety net, stopping to confirm the obvious wastes the session. Stop only for destructive or irreversible actions (delete repository, drop database, force-push to main), or genuinely non-obvious trade-offs. When intent could mean different things, escalate with structure: one problem, three options with trade-offs, one recommendation with reason. When the ambiguity only changes how (not what), proceed inline with a documented default.
 
+## Escalation to Full Orchestration
+
+Quick mode is the default — stay in it for normal work. Stop and ask to boot the Maestro (full orchestration, `@.agents/ENTRYPOINT.md`) only when an objective trigger fires mid-task:
+
+- **Scope creep** — the task now touches 3+ files or crosses architectural layers beyond what the original request implied.
+- **Diff size** — the change is on track to exceed ~600 LOC (the review-loop Full tier threshold).
+- **Stuck** — 3 failed fix attempts on the same bug with no root cause found (follows the Debugging as Investigation rule below) — the approach is the problem, not the next patch.
+- **Risk surface** — the change touches auth, payments, migrations, or an external-facing security boundary.
+- **User signal** — the user says the task is complex, reports repeated errors, or asks for it explicitly.
+
+When a trigger fires: stop pushing forward. Summarize in 2-3 sentences what was tried and why it's stalled or growing past scope. Ask: "Isso ficou complexo — quer que eu chame o Maestro pra isso?" Never boot Maestro without that confirmation — full orchestration costs more tokens and time, so the user decides when it's worth it. A single failed attempt or a normal-sized one-file fix is not a trigger — escalation is for compounding complexity, not every retry.
+
 ## Code Shape
 
 Getting function boundaries right means the reader never reassembles scattered logic or untangles mixed concerns. Three questions: what to extract, what to unify, what to keep together.

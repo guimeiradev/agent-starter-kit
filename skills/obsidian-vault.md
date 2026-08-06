@@ -49,6 +49,7 @@ Infer the destination from the current working directory, task description, or u
    - Fill `related:` frontmatter with matched `[[links]]` from step 2.
    - Add a `## Notas Relacionadas` section at the bottom listing the same links with a one-line description of why they're related.
    - Inside the note body, use `[[link]]` inline where relevant (e.g. "Este fix complementa [[2026-06-10-bug-autenticacao]]").
+   - **If the work is tied to a specific repo/project** (not a one-off), file it under `Projetos/<NomeDoProjeto>/` — one subfolder per project, all its notes live there (see Folder-per-project below). Otherwise (isolated fix, no ongoing project folder) use `Problemas/` as before.
 
 4. **Update existing related notes.** For each note found in step 2 that does NOT already link back to this new note — append the new note's link to its `related:` frontmatter.
 
@@ -91,6 +92,10 @@ related: []
 - [[nota-relacionada]] — <por que está relacionada>
 ```
 
+## Folder-per-project
+
+When multiple notes accumulate around the same repo or feature (e.g. `SinistroWeb`, `IntegracaoTriello`, `Hercules`), give it its own subfolder under `Projetos/<NomeDoProjeto>/` and file every note about it there — architecture maps, plans, bug fixes, everything, each as its own `YYYY-MM-DD-slug.md` in the structured format below. Do not create a per-project `log.md` changelog (see Guardrails) — a project folder with several structured notes IS the changelog; open the folder or `grep`/Dataview across it.
+
 ## Sync (obrigatório após salvar)
 
 Após criar o arquivo no vault, executar:
@@ -117,6 +122,7 @@ Isso garante que o vault é atualizado no GitHub e todas as máquinas recebem as
 
 ## Guardrails
 
+- **Never create or append to a `log.md` changelog file, and never call the `vault_log` MCP tool** (deprecated 2026-07-23 — it now no-ops with a warning). A running "### date — files / O que / Por quê" log reads as vague once it grows past one or two entries, because it has no Contexto/Investigação. Always create a full structured note per the template below instead, even for a small change — see Folder-per-project for where it goes.
 - Never save credentials, tokens, or secrets to the vault.
 - If the task was purely conversational (no problem solved, no code written), skip saving unless the user asks.
 - Always use the frontmatter exactly as specified — Dataview queries depend on it.

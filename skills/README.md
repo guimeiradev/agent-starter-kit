@@ -14,12 +14,15 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 - `coder-self-review` — GRASP self-review rubric — implementation quality gate
 - `context-maintenance` — How to maintain .context.md files and docs/FEATURE-MAP.md as the project evolves
 - `contextualizer-self-review` — TRACE self-review rubric — context generation quality gate
+- `contextualizer-graphify` — Use graphify's knowledge graph instead of re-walking the tree for large/unfamiliar codebases
 - `dispatch` — Assembles sub-agent prompts with task brief
+- `headroom` — Local token-compression proxy for LLM API calls — reduces cost/context on every dispatch
 - `loop-recovery` — Structured recovery and escalation for retry loops
 - `reviewer-architect-adversarial` — Adversarial plan validation — structural checks and assumption attack before implementation
 - `reviewer-handoff` — Structured review summary format with verdict logic and deterministic coverage scoring
 - `review-loop` — LOC-based review tier selection with shapeshifter dispatch for the unified reviewer
 - `reviewer-self-review` — SHIELD self-review rubric — unified reviewer quality gate
+- `task-observer` — Continuous skill-improvement observation loop — logs friction/patterns during work for later review
 - `task-tracking` — File-based to-do tracking for multi-step and multi-session work
 
 ## When to Extract a Skill

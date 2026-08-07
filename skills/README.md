@@ -6,8 +6,10 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 
 - `agent-decision` — Structured ambiguity escalation with 1-3-1 analysis and FRAME self-review rubric
 - `agent-memory` — Long-term and session memory across sessions
+- `alignment-grill` — Iterative alignment interview that resolves compounding ambiguity before planning begins
 - `architect-self-review` — DRAFT self-review rubric — plan quality gate
 - `boot` — Session startup — gitignore, auto-update, memory, rules, orient
+- `bug-diagnosis` — Disciplined root-cause loop for bug fixes — reproduce, isolate, confirm, fix
 - `code-coherence-review` — Logic coherence, correctness, and structural integrity checks
 - `code-quality-review` — Rules-walk procedure for coding standards compliance
 - `code-sec-review` — OWASP-aligned security code review checklist
@@ -18,6 +20,7 @@ Skills are collected intelligence on how to operate a specific tool — whether 
 - `dispatch` — Assembles sub-agent prompts with task brief
 - `headroom` — Local token-compression proxy for LLM API calls — reduces cost/context on every dispatch
 - `loop-recovery` — Structured recovery and escalation for retry loops
+- `merge-conflicts` — Resolve merge conflicts hunk-by-hunk by intent, not by picking a side wholesale
 - `reviewer-architect-adversarial` — Adversarial plan validation — structural checks and assumption attack before implementation
 - `reviewer-handoff` — Structured review summary format with verdict logic and deterministic coverage scoring
 - `review-loop` — LOC-based review tier selection with shapeshifter dispatch for the unified reviewer
